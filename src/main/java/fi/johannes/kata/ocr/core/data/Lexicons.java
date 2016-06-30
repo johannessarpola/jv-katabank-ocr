@@ -39,67 +39,47 @@ public class Lexicons {
         /**
          * Decision tree to figure out the digit value from input.
          *
-         * @param input three by three cell
-         * @return Integer what's represented in the Cell, or -1 if it couldn't be resolved
+         * @param cell Digit cell
+         * @return Integer what's represented in the Cell, or -1 if it couldn't
+         * be resolved
          */
-        public static Integer resolve(Cell input) {
-            // you could also use the TetrisBlocks here but it's pretty much the same to use just characters.
-            // It's probably more performant just to do decision tree rather than iterative approach where in you do 'equals' and compare to each number
-            // especially for 'shallow' numbers like 1 and 4
-            char[] cs = input.toString().toCharArray();
-            // 1,4
-            if (cs[1] == ' ') {
-                if (cs[3] == '|') {
-                    return 4;
-                } else {
-                    return 1;
-                }
+        public static Integer resolve(Cell cell) {
+            String cStr = cell.toString();
+            if (cStr.equals(Digits.ONE)) {
+                return 1;
+            }
+            if (cStr.equals(Digits.TWO)) {
+                return 2;
+            }
+            if (cStr.equals(Digits.THREE)) {
+                return 3;
+            }
+            if (cStr.equals(Digits.FOUR)) {
+                return 4;
+            }
+            if (cStr.equals(Digits.FIVE)) {
+                return 5;
+            }
+            if (cStr.equals(Digits.SIX)) {
+                return 6;
+            }
+            if (cStr.equals(Digits.SEVEN)) {
+                return 7;
+            }
+            if (cStr.equals(Digits.EIGHT)) {
+                return 8;
+            }
+            if (cStr.equals(Digits.NINE)) {
+                return 9;
+            }
+            if (cStr.equals(Digits.ZERO)) {
+                return 0;
             } else {
-                // 2,3,7
-                if (cs[3] == ' ') {
-                    // 2,3
-                    if (cs[4] == '_') {
-                        if(cs[6] == ' ') {
-                            return 3;
-                        }
-                        else return 2;
-                    }
-                    // 7
-                    else {
-                        return 7;
-                    }
-                }
-                // 5,6,8,9,0
-                if (cs[3] == '|') {                    
-                    // 8,9,0
-                    if(cs[5] == '|') {
-                        // 8,9
-                        if(cs[4] == '_'){
-                            if(cs[6]=='|') {
-                                return 8;
-                            }
-                            else {
-                                return 9;
-                            }
-                        }
-                        // 0
-                        else {
-                            return 0;
-                        }
-                    }
-                    // 5,6
-                    else {
-                        if(cs[6] == '|') {
-                            return 6;
-                        }
-                        else {
-                            return 5;
-                        }
-                    }
+                return -1;
             }
-            }
-            return -1;
+
         }
+
     }
 
     public static class Digits {
