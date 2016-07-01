@@ -33,22 +33,19 @@ import java.util.List;
  */
 public class Checksum {
 
-    private Boolean valid; // TODO Validate checksum
-    private List<Integer> numbers;
+    private Boolean valid;
     private Double checksum;
     final Integer modulo;
     
     
     public Checksum(List<Integer> numbers, Integer modulo) {
-        this.numbers = numbers;
         this.modulo = modulo;
-        calculateChecksum();
+        calculateChecksum(numbers);
         validate();
     }
     public Checksum(List<Integer> numbers) {
-        this.numbers = numbers;
         this.modulo = 11; // default modulo
-        this.checksum = calculateChecksum();
+        this.checksum = calculateChecksum(numbers);
         this.valid = validate();
     }
     /**
@@ -58,7 +55,7 @@ public class Checksum {
      * checksum calculation: (d1+2*d2+3*d3 +..+9*d9) mod 11 = 0
      *
      */
-    private Double calculateChecksum() {
+    private Double calculateChecksum(List<Integer> numbers) {
         List<Integer> tNumbers = Lists.reverse(numbers);
         Double sum = 0.;
         Integer j = 1;
