@@ -34,4 +34,8 @@ public class ApplicationProperties {
     public static class Validation {
         public static final Integer CHECKSUM_MODULO = 11;
     }
+    public static class Cells{
+        public static final Integer CELL_WIDTH = 3;
+        public static final Integer CELL_HEIGHT = 3;
+    }
 }
