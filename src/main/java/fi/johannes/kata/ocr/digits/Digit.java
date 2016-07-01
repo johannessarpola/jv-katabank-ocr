@@ -24,23 +24,25 @@
 package fi.johannes.kata.ocr.digits;
 
 import fi.johannes.kata.ocr.cells.Cell;
+import fi.johannes.kata.ocr.core.data.Lexicons;
 import java.util.Objects;
 
 /**
  * Class to hold Cell and Number
+ *
  * @author Johannes Sarpola <johannes.sarpola at gmail.com>
  * @date Jul 1, 2016
  */
- public final class Digit {
+public final class Digit {
 
     Cell cell;
     Integer number;
     String representation;
     Boolean validDigit;
-    
-    public Digit(Cell cell, Integer number) {
+
+    public Digit(Cell cell) {
         this.cell = cell;
-        this.number = number;
+        this.number = Lexicons.DigitLexiconResolver.resolveNumber(cell);
         this.validDigit = DigitMethods.isValidNumber(number);
         this.representation = createRepresentation();
     }
@@ -80,10 +82,13 @@ import java.util.Objects;
         hash = 31 * hash + Objects.hashCode(this.number);
         return hash;
     }
-    
-    private String createRepresentation(){
-        if(validDigit) return number.toString();
-        else return DigitMethods.getInvalidRepresentation();
+
+    private String createRepresentation() {
+        if (validDigit) {
+            return number.toString();
+        } else {
+            return DigitMethods.getInvalidRepresentation();
+        }
     }
 
     public String getRepresentation() {
@@ -93,6 +98,5 @@ import java.util.Objects;
     public Boolean isValid() {
         return validDigit;
     }
-    
-    
+
 }
