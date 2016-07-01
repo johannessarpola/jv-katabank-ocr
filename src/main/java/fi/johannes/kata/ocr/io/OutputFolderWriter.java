@@ -21,29 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package fi.johannes.kata.ocr.io;
 
-import fi.johannes.kata.ocr.utils.structs.Filename;
+import fi.johannes.kata.ocr.utils.files.CFolderOperations;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 /**
- * Input from a folder
+ * Output to folder
  * @author Johannes Sarpola
  * @date Jul 1, 2016
  */
-public class InputFolder extends IOFolder{
-    
-    public InputFolder(Path folder) {
+public class OutputFolderWriter extends FolderIO{
+
+    public OutputFolderWriter(Path folder) {
         super(folder);
     }
-    public List<String> read(Filename filename) throws IOException {
-        // TODO Fix if file does not exist
-        return Files.readAllLines(filename.getAbsolutePath());
+
+    public void write(List<String> lines, String filename) throws IOException {
+        Path outputfile = folder.resolve(filename);
+        // TODO Fix if file exists
+        Files.write(outputfile, lines, StandardOpenOption.CREATE);
+
     }
-            
+    public void create() throws IOException{
+        CFolderOperations.createFolder(folder);
+    }
+
+    public void clear() {
+        CFolderOperations.recursiveDelete(folder.toString());
+    }
+
+
     
 }

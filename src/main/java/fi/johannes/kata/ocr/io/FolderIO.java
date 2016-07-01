@@ -26,20 +26,23 @@ package fi.johannes.kata.ocr.io;
 import fi.johannes.kata.ocr.core.data.ApplicationStrings;
 import fi.johannes.kata.ocr.utils.Logging;
 import fi.johannes.kata.ocr.utils.files.CFolderOperations;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.NotDirectoryException;
 import java.nio.file.Path;
+import java.util.List;
 
 /**
  * Parent for Input and Output
+ *
  * @author Johannes Sarpola
  * @date Jul 1, 2016
  */
-abstract class IOFolder {
+abstract class FolderIO {
 
     Path folder;
 
-    public IOFolder(Path folder) {
+    public FolderIO(Path folder) {
         this.folder = folder;
     }
 
@@ -58,5 +61,8 @@ abstract class IOFolder {
     public Path getFolder() {
         return folder;
     }
-    
+
+    public List<Path> getFiles() throws IOException {
+        return CFolderOperations.getFilesInFolder(folder);
+    }
 }
