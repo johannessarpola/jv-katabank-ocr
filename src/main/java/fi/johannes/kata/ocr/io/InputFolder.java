@@ -21,52 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package fi.johannes.kata.ocr.io;
 
-import fi.johannes.kata.ocr.core.data.ApplicationStrings;
-import fi.johannes.kata.ocr.utils.Logging;
-import fi.johannes.kata.ocr.utils.files.CFolderOperations;
 import fi.johannes.kata.ocr.utils.structs.Filename;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.NotDirectoryException;
 import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 /**
- *
+ * Input from a folder
  * @author Johannes Sarpola
  * @date Jul 1, 2016
  */
-public class Output {
-
-    Path folder;
-
-    public Output() {
-
+public class InputFolder extends IOFolder{
+    
+    public InputFolder(Path folder) {
+        super(folder);
     }
-
-    public void write(List<String> lines, Filename filename) throws IOException {
-        // TODO Fix if file exists
-        Files.write(filename.getAbsolutePath(), lines, StandardOpenOption.CREATE_NEW);
-
+    public List<String> read(Filename filename) throws IOException {
+        // TODO Fix if file does not exist
+        return Files.readAllLines(filename.getAbsolutePath());
     }
-
-    public void connectToFolder(Path folder) throws NotDirectoryException {
-        this.folder = folder;
-        if (!Files.isDirectory(folder)) {
-            Logging.logMessageWithExpection_Fatal(this.getClass(), ApplicationStrings.LoggingMessages.Error.FOLDER_CONNECTION_UNSUCCESSFUL, new NotDirectoryException(folder.toString()));
-            throw new NotDirectoryException(folder.toString());
-        } else if (!Files.exists(folder)) {
-            CFolderOperations.createFolder(folder.toString());
-        } else {
-            Logging.logMessage_Info(this.getClass(), ApplicationStrings.LoggingMessages.Info.FOLDER_CONNECTION_SUCCESSFUL);
-        }
-    }
-
-    public Path getFolder() {
-        return folder;
-    }
+            
     
 }

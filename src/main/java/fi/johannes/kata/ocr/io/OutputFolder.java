@@ -21,14 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package fi.johannes.kata.ocr.io;
 
+import fi.johannes.kata.ocr.utils.structs.Filename;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+import java.util.List;
+
 /**
- *
+ * Output to folder
  * @author Johannes Sarpola
  * @date Jul 1, 2016
  */
-public class Input {
+public class OutputFolder extends IOFolder{
 
+    public OutputFolder(Path folder) {
+        super(folder);
+    }
+
+    
+
+    public void write(List<String> lines, Filename filename) throws IOException {
+        // TODO Fix if file exists
+        Files.write(filename.getAbsolutePath(), lines, StandardOpenOption.CREATE_NEW);
+
+    }
+
+
+    
 }
