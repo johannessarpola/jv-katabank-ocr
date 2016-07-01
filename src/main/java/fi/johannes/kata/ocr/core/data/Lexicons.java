@@ -50,18 +50,21 @@ public class Lexicons {
         private static final String underscoreInMid = " _ ";
         private static final String underscoreOnRight = "  _";
         private static final String lineOnLeftAndRight = "| |";
+        
     }
 
-    public static class DigitResolver {
+    public static class DigitLexiconResolver {
 
+        private static final Integer INVALID_NUMBER = -1;
+        
         /**
-         * Decision tree to figure out the digit value from input.
+         * Decision tree to figure out numerical value from input.
          *
          * @param cell Digit cell
          * @return Integer what's represented in the Cell, or -1 if it couldn't
          * be resolved
          */
-        public static Integer resolve(Cell cell) {
+        public static Integer resolveNumber(Cell cell) {
             String cStr = cell.toString();
             if (cStr.equals(Digits.ONE)) {
                 return 1;
@@ -93,15 +96,36 @@ public class Lexicons {
             if (cStr.equals(Digits.ZERO)) {
                 return 0;
             } else {
-                return -1;
+                // Preferred as opposed to null as we know what are possible digits
+                return INVALID_NUMBER;
             }
 
+        }
+        /**
+         * Decision tree to figure out numbers from the list of cells
+         *
+         * @param cells Digit cells 
+         * @return List of Integers what's represented in the Cells, or -1 for a cell if it couldn't be resolved
+         */
+        public static List<Integer> resolveNumbers(List<Cell> cells) {
+            List<Integer> integers = new ArrayList<>();
+            for(Cell cell : cells) {
+                integers.add(resolveNumber(cell));
+            }
+            return integers;
+        }
+        /**
+         * Gets the numerical value of invalid Number
+         * @return 
+         */
+        public static Integer InvalidNumber(){
+            return INVALID_NUMBER;
         }
 
     }
 
     public static class Digits {
-
+                
         private static final String ZERO = TetrisBlocks.underscoreInMid + TetrisBlocks.lineOnLeftAndRight + TetrisBlocks.ramp;
         private static final String ONE = TetrisBlocks.empty + TetrisBlocks.lineOnRight + TetrisBlocks.lineOnRight;
         private static final String TWO = TetrisBlocks.underscoreInMid + TetrisBlocks.reverseL + TetrisBlocks.L;
