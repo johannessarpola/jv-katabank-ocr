@@ -34,7 +34,7 @@ import org.apache.commons.io.FilenameUtils;
  * @author Johannes Sarpola
  * @date Jul 1, 2016
  */
-class Filename {
+public class Filename {
 
     Path absolutePath;
     String fullpath;
