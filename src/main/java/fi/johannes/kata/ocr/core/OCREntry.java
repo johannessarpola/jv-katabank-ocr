@@ -117,7 +117,7 @@ public class OCREntry {
 
     public enum Status {
         Malformed,
-        Error,
+        InvalidChecksum,
         Ambiguous
     }
 
