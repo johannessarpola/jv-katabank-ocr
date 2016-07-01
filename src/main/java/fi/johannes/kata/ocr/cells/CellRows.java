@@ -23,7 +23,7 @@
  */
 package fi.johannes.kata.ocr.cells;
 
-import fi.johannes.kata.ocr.utils.FileConnection;
+import fi.johannes.kata.ocr.utils.ExistingFileConnection;
 import fi.johannes.kata.ocr.utils.structs.IntegerPair;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,14 +40,14 @@ public class CellRows implements Iterable<CellRow> {
     private List<CellRow> cellRows;
     private Integer height;
     private Integer width;
-    private FileConnection connection;
+    private ExistingFileConnection connection;
 
-    public CellRows(IntegerPair pair, FileConnection connection) throws IOException {
+    public CellRows(IntegerPair pair, ExistingFileConnection connection) throws IOException {
         init(pair, connection);
         buildRows();
     }
 
-    private void init(IntegerPair pair, FileConnection connection) {
+    private void init(IntegerPair pair, ExistingFileConnection connection) {
         this.height = pair.getY();
         this.width = pair.getX();
         this.connection = connection;
