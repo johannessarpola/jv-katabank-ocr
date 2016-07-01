@@ -39,6 +39,6 @@ class DigitMethods {
         return !(Objects.equals(numb, Lexicons.DigitLexiconResolver.InvalidNumber()));
     }
     public static String getInvalidRepresentation(){
-        return ApplicationStrings.Anomalies.MALFORMED_DIGIT_REPRESENTATION;
+        return ApplicationStrings.MALFORMED_DIGIT_REPRESENTATION;
     }
 }

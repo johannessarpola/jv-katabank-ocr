@@ -34,13 +34,14 @@ public class ApplicationStrings {
      * How fields are delimeted e.g 1234567890 ERR
      */
     public final static String FIELD_DELIMETER = " ";
+    public final static String MALFORMED_DIGIT_REPRESENTATION = "?";
 
     /**
      * Has messages related to anomalies in OCR
      */
     public static class OutputBuilder {
+
         public final static String OK = "OK";
-        public final static String MALFORMED_DIGIT_REPRESENTATION = "?";
         public final static String INVALID_CHECKSUM_FIELD = "ERR";
         public final static String MALFORMED_DIGIT_FIELD = "ILL";
         public final static String AMBIGUOUS_ENTRY_FIELD = "AMB";
@@ -59,7 +60,7 @@ public class ApplicationStrings {
         }
 
         public static class Error {
-            
+
             public static final String FOLDER_CONNECTION_UNSUCCESSFUL = "There was problem with establishing connection to folder";
             public static final String COULD_NOT_CONNECT_TO_INPUT = "There was problem with establishing connection to input folder";
         }
