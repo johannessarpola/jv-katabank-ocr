@@ -23,7 +23,7 @@
  */
 package fi.johannes.kata.ocr.cells;
 
-import fi.johannes.kata.ocr.utils.ExistingFileConnection;
+import fi.johannes.kata.ocr.utils.files.ExistingFileConnection;
 import fi.johannes.kata.ocr.utils.structs.IntegerPair;
 import java.io.IOException;
 import java.util.ArrayList;

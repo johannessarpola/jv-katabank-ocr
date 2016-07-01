@@ -31,15 +31,15 @@ import java.util.List;
  * @date Jun 30, 2016
  */
 public class RowBundle<T> {
+
     List<T> items;
 
     public RowBundle(List<T> items) {
-        if(items.size() != 3) {
-            this.items = items;
-        }
+        this.items = items;
     }
-    public List<T> getRows(){
+
+    public List<T> getRows() {
         return items;
     }
-    
+
 }

@@ -56,7 +56,7 @@ public class RowBundles<T> implements Iterable<RowBundle<T>> {
                 counter++;
             } 
             if(counter == bundleSize) {
-                bundles.add(new RowBundle<T>(items));
+                bundles.add(new RowBundle(bundle));
                 counter = 0;
             }
         }
