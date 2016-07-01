@@ -30,8 +30,13 @@ package fi.johannes.kata.ocr.core.data;
  */
 public class ApplicationStrings {
 
+    /**
+     * How fields are delimeted e.g 1234567890 ERR
+     */
     public final static String FIELD_DELIMETER = " ";
-
+    /**
+     * Has messages related to anomalies in OCR
+     */
     public static class Anomalies {
 
         public final static String MALFORMED_DIGIT_REPRESENTATION = "?";
@@ -41,9 +46,11 @@ public class ApplicationStrings {
         public final static String INVALID_STATUS = "???";
 
     }
-
+    /**
+     * Has messages related to logging
+     */
     public static class LoggingMessages {
-
+        
         public static class Info {
 
             public static final String FOLDER_CONNECTION_SUCCESSFUL = "Connection to Folder done";

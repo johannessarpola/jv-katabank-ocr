@@ -25,15 +25,20 @@
 package fi.johannes.kata.ocr.core.data;
 
 /**
- *
+ * Class to hold application wide properties
  * @author Johannes Sarpola
  * @date Jul 1, 2016
  */
 public class ApplicationProperties {
-
+    /**
+     * Has validation specific properties
+     */
     public static class Validation {
         public static final Integer CHECKSUM_MODULO = 11;
     }
+    /**
+     * Has Cell specific properties
+     */
     public static class Cells{
         public static final Integer CELL_WIDTH = 3;
         public static final Integer CELL_HEIGHT = 3;
