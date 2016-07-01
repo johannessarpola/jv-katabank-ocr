@@ -33,16 +33,20 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.NotDirectoryException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.FileAttribute;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * Has utility classes from 1.8 and before it
  *
  * @author Johannes Sarpola <johannes.sarpola@gmail.com>
  */
 public class CFolderOperations {
+
     /**
      * files in folder
      *
@@ -53,6 +57,23 @@ public class CFolderOperations {
         File folder = new File(path);
         File[] listOfFiles = folder.listFiles();
         return listOfFiles;
+    }
+
+    /**
+     * Paths in folder 1.8
+     *
+     * @param path
+     * @return
+     * @throws IOException
+     */
+    public static List<Path> getFilesInFolder(Path path) throws IOException {
+        List<Path> files = new ArrayList<>();
+        Files.walk(path).forEach(filePath -> {
+            if (Files.isRegularFile(filePath)) {
+                files.add(filePath);
+            }
+        });
+        return files;
     }
 
     /**
@@ -109,6 +130,37 @@ public class CFolderOperations {
      *
      * @param folder
      * @return
+     * @throws java.io.IOException
+     */
+    public static Path createFolder(Path folder) throws IOException {
+        if (!Files.exists(folder) && !Files.isDirectory(folder)) {
+            Files.createDirectory(folder);
+        }
+        return folder;
+
+    }
+
+    /**
+     * Creates folder or returns existing
+     *
+     * @param folder
+     * @param fileAttributes attributes for the folder
+     * @return
+     * @throws java.io.IOException
+     */
+    public static Path createFolder(Path folder, FileAttribute fileAttributes) throws IOException {
+        if (!Files.exists(folder) && Files.isDirectory(folder)) {
+            Files.createDirectory(folder, fileAttributes);
+        }
+        return folder;
+
+    }
+
+    /**
+     * Creates folder or returns existing
+     *
+     * @param folder
+     * @return
      */
     public static File createFolder(String folder) {
         if (doesFolderExist(folder)) {
@@ -124,9 +176,11 @@ public class CFolderOperations {
         File f = new File(folder);
         return f.isDirectory();
     }
+
     /**
      * Removes folder and everything inside it
-     * @param folder 
+     *
+     * @param folder
      */
     public static void recursiveDelete(String folder) {
         File f = new File(folder);
@@ -135,13 +189,13 @@ public class CFolderOperations {
             for (File fo : fs) {
                 fo.delete();
                 // Back up for deletion upon closing VM
-                if(fo.exists()){
+                if (fo.exists()) {
                     fo.deleteOnExit();
                 }
             }
             f.delete();
             // Back up for deletion upon closing VM
-            if(f.exists()){
+            if (f.exists()) {
                 f.deleteOnExit();
             }
         }
