@@ -27,7 +27,7 @@ import com.google.common.collect.Lists;
 import java.util.List;
 
 /**
- *
+ * Holds the checksum and you can check if it's valid with isValid
  * @author Johannes Sarpola <johannes.sarpola at gmail.com>
  * @date Jun 25, 2016
  */
