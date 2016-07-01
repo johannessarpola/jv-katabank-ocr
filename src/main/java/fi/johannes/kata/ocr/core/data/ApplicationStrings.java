@@ -21,7 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package fi.johannes.kata.ocr.core.data;
 
 /**
@@ -30,12 +29,29 @@ package fi.johannes.kata.ocr.core.data;
  * @date Jul 1, 2016
  */
 public class ApplicationStrings {
+
     public final static String FIELD_DELIMETER = " ";
-    
+
     public static class Anomalies {
-            public final static String MALFORMED_DIGIT_REPRESENTATION = "?";
-            public final static String INVALID_CHECKSUM_FIELD = "ERR";
-            public final static String MALFORMED_DIGIT_FIELD = "ILL";
-            public final static String AMBIGUOUS_ENTRY_FIELD = "AMB";
+
+        public final static String MALFORMED_DIGIT_REPRESENTATION = "?";
+        public final static String INVALID_CHECKSUM_FIELD = "ERR";
+        public final static String MALFORMED_DIGIT_FIELD = "ILL";
+        public final static String AMBIGUOUS_ENTRY_FIELD = "AMB";
     }
+
+    public static class LoggingMessages {
+
+        public static class Info {
+
+            public static final String FOLDER_CONNECTION_SUCCESSFUL = "Connection to Folder done";
+        }
+
+        public static class Error {
+
+            public static final String FOLDER_CONNECTION_UNSUCCESSFUL = "There was problem with establishing connection to folder";
+
+        }
+    }
+
 }
