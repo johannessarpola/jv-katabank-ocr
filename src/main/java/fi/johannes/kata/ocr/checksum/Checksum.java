@@ -40,8 +40,8 @@ public class Checksum {
     
     public Checksum(List<Integer> numbers, Integer modulo) {
         this.modulo = modulo;
-        checksum = calculateChecksum(numbers);
-        validate();
+        this.checksum = calculateChecksum(numbers);
+        this.valid = validate();
     }
     public Checksum(List<Integer> numbers) {
         this.modulo = 11; // default modulo
