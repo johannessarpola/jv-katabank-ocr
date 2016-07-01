@@ -52,7 +52,8 @@ public class Filename {
     }
 
     public Filename(Path filename) throws IOException {
-        if (CFilePathOperations.validatePath(filename.toString())) {
+        // TODO Not sure is it even necessary to validate Path, check
+        if (CFilePathOperations.validatePath(filename.getFileName().toString())) {
             absolutePath = filename.toAbsolutePath();
             cacheStrings();
         } else {
