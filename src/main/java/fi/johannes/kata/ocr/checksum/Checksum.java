@@ -40,7 +40,7 @@ public class Checksum {
     
     public Checksum(List<Integer> numbers, Integer modulo) {
         this.modulo = modulo;
-        calculateChecksum(numbers);
+        checksum = calculateChecksum(numbers);
         validate();
     }
     public Checksum(List<Integer> numbers) {
