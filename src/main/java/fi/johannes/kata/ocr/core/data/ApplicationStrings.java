@@ -38,6 +38,8 @@ public class ApplicationStrings {
         public final static String INVALID_CHECKSUM_FIELD = "ERR";
         public final static String MALFORMED_DIGIT_FIELD = "ILL";
         public final static String AMBIGUOUS_ENTRY_FIELD = "AMB";
+        public final static String INVALID_STATUS = "???";
+
     }
 
     public static class LoggingMessages {
