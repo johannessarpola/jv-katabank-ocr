@@ -35,10 +35,10 @@ import java.util.Objects;
  */
 public final class Digit {
 
-    Cell cell;
-    Integer number;
-    String representation;
-    Boolean validDigit;
+    private final Cell cell;
+    private final Integer number;
+    private final String representation;
+    private final Boolean validDigit;
 
     public Digit(Cell cell) {
         this.cell = cell;

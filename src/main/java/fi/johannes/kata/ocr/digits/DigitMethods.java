@@ -24,16 +24,16 @@
 
 package fi.johannes.kata.ocr.digits;
 
-import fi.johannes.kata.ocr.core.data.Lexicons;
 import fi.johannes.kata.ocr.core.data.ApplicationStrings;
+import fi.johannes.kata.ocr.core.data.Lexicons;
 import java.util.Objects;
 
 /**
- *
+ * Digit specific methods
  * @author Johannes Sarpola
  * @date Jul 1, 2016
  */
-public class DigitMethods {
+class DigitMethods {
     
     public static Boolean isValidNumber(Integer numb){
         return !(Objects.equals(numb, Lexicons.DigitLexiconResolver.InvalidNumber()));
