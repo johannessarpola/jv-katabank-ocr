@@ -40,7 +40,10 @@ public class CellRow {
     private List<Cell> cells;
     private int celllength;
     private Splitter fixedLengthSplitter;
-
+    
+    private CellRow(){
+        cells = new ArrayList<>();
+    }
     public CellRow(List<String> lines, int cellLength) {
         init(cellLength);
         cells = readFromList(lines);
