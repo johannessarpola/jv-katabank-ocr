@@ -27,7 +27,6 @@ import fi.johannes.kata.ocr.cells.Cell;
 import fi.johannes.kata.ocr.cells.CellRow;
 import fi.johannes.kata.ocr.checksum.Checksum;
 import fi.johannes.kata.ocr.core.data.ApplicationProperties;
-import fi.johannes.kata.ocr.core.data.Lexicons;
 import fi.johannes.kata.ocr.digits.Digit;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +46,7 @@ public class OCREntry {
     Boolean malformed;
     Boolean error;
     Boolean ambiguous;
-    
+
     public OCREntry(CellRow cr) {
         init();
         build(cr);
@@ -60,9 +59,8 @@ public class OCREntry {
         Integer number;
         List<Integer> integers = new ArrayList<>();
         for (Cell cell : cells) {
-            number = Lexicons.DigitLexiconResolver.resolveNumber(cell);
-            integers.add(number);
-            d = new Digit(cell, number);
+            d = new Digit(cell);
+            integers.add(d.getNumber());
             digits.add(d);
             malformed = d.isValid();
             digitRepresentation += d.getRepresentation();
@@ -75,18 +73,16 @@ public class OCREntry {
     private void buildChecksum(List<Integer> integers) {
         checksum = new Checksum(integers, ApplicationProperties.Entries.CHECKSUM_MODULO);
         error = checksum.isValid();
-        
-         // TODO Resolve ambiguous 
+
+        // TODO Resolve ambiguous 
     }
 
     private void resolveStatus() {
-        if(malformed){
+        if (malformed) {
             status = 0;
-        }
-        else if(error) {
+        } else if (error) {
             status = 1;
-        }
-        else if(ambiguous) {
+        } else if (ambiguous) {
             status = 2;
         }
     }
