@@ -42,7 +42,7 @@ public class OCREntry {
     private List<Digit> digits;
     private String digitRepresentation;
 
-    Integer status = -1;
+    Integer status = 0;
     Boolean malformed;
     Boolean error;
     Boolean ambiguous;
@@ -58,11 +58,12 @@ public class OCREntry {
         Digit d;
         Integer number;
         List<Integer> integers = new ArrayList<>();
+        
         for (Cell cell : cells) {
             d = new Digit(cell);
             integers.add(d.getNumber());
             digits.add(d);
-            malformed = d.isValid();
+            malformed = !d.isValid();
             digitRepresentation += d.getRepresentation();
 
         }
@@ -72,18 +73,18 @@ public class OCREntry {
 
     private void buildChecksum(List<Integer> integers) {
         checksum = new Checksum(integers, ApplicationProperties.Entries.CHECKSUM_MODULO);
-        error = checksum.isValid();
+        error = !checksum.isValid();
 
         // TODO Resolve ambiguous 
     }
 
     private void resolveStatus() {
         if (malformed) {
-            status = 0;
-        } else if (error) {
             status = 1;
-        } else if (ambiguous) {
+        } else if (error) {
             status = 2;
+        } else if (ambiguous) {
+            status = 3;
         }
     }
 
@@ -112,6 +113,7 @@ public class OCREntry {
     }
 
     public enum Status {
+        OK,
         Malformed,
         InvalidChecksum,
         Ambiguous
