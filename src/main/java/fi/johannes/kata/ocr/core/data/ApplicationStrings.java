@@ -34,11 +34,12 @@ public class ApplicationStrings {
      * How fields are delimeted e.g 1234567890 ERR
      */
     public final static String FIELD_DELIMETER = " ";
+
     /**
      * Has messages related to anomalies in OCR
      */
-    public static class Anomalies {
-
+    public static class OutputBuilder {
+        public final static String OK = "OK";
         public final static String MALFORMED_DIGIT_REPRESENTATION = "?";
         public final static String INVALID_CHECKSUM_FIELD = "ERR";
         public final static String MALFORMED_DIGIT_FIELD = "ILL";
@@ -46,21 +47,41 @@ public class ApplicationStrings {
         public final static String INVALID_STATUS = "???";
 
     }
+
     /**
      * Has messages related to logging
      */
     public static class LoggingMessages {
-        
+
         public static class Info {
 
             public static final String FOLDER_CONNECTION_SUCCESSFUL = "Connection to Folder done";
         }
 
         public static class Error {
-
+            
             public static final String FOLDER_CONNECTION_UNSUCCESSFUL = "There was problem with establishing connection to folder";
-
+            public static final String COULD_NOT_CONNECT_TO_INPUT = "There was problem with establishing connection to input folder";
         }
     }
 
+    /**
+     * Strings from input-output
+     */
+    public static class InputOutput {
+
+        public static final String CONNECTING_CHARACTER = "_";
+
+        public static class I {
+
+            public static final String SOURCE_DESCRIPTION_PREFIX = "Source";
+        }
+
+        public static class O {
+
+            public static final String OUTPUT_DESCRIPTION = "OCR_Entry";
+            public static final String OUTPUT_EXTENSION = ".txt";
+
+        }
+    }
 }
