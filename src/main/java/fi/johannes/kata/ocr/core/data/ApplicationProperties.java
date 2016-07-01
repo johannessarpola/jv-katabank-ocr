@@ -31,7 +31,7 @@ package fi.johannes.kata.ocr.core.data;
  */
 public class ApplicationProperties {
 
-    public static class Entries {
+    public static class Validation {
         public static final Integer CHECKSUM_MODULO = 11;
     }
 }

@@ -72,7 +72,7 @@ public class OCREntry {
     }
 
     private void buildChecksum(List<Integer> integers) {
-        checksum = new Checksum(integers, ApplicationProperties.Entries.CHECKSUM_MODULO);
+        checksum = new Checksum(integers, ApplicationProperties.Validation.CHECKSUM_MODULO);
         error = !checksum.isValid();
 
         // TODO Resolve ambiguous 
