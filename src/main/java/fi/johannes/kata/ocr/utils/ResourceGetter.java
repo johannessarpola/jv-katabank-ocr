@@ -27,10 +27,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import org.apache.commons.io.IOUtils;
 
 /**
-  Gets files in the Resoures folder
+ * Gets files in the Resoures folder
+ *
  * @author Johannes Sarpola <johannes.sarpola at gmail.com>
  * @date Jun 30, 2016
  */
@@ -42,6 +45,7 @@ public class ResourceGetter {
         try {
             result = IOUtils.toString(r);
         } catch (IOException e) {
+            // TODO Logger
             e.printStackTrace();
         }
         return result;
@@ -55,14 +59,21 @@ public class ResourceGetter {
 
     public static URL getUrl(String fileName) {
         ClassLoader classLoader = ResourceGetter.class.getClassLoader();
-        URL url =  classLoader.getResource(fileName);
+        URL url = classLoader.getResource(fileName);
         return url;
     }
-    public static String getPath(String fileName) {
-        URL url =  getUrl(fileName);
-        if(url.getPath().startsWith("/")) {
+
+    public static String getPathAsString(String fileName) {
+        URL url = getUrl(fileName);
+        if (url.getPath().startsWith("/")) {
             return url.getPath().substring(1);
         }
         return url.getPath();
+    }
+
+    public static Path getPath(String fileName) {
+        // Manual conversion to String so don't need to throw expection from URI conversion
+        String path = getPathAsString(fileName);
+        return Paths.get(path);
     }
 }
