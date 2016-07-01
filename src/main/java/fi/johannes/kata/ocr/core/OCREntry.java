@@ -39,10 +39,15 @@ import java.util.List;
  */
 public class OCREntry {
 
-    
     private Checksum checksum;
     private List<Digit> digits;
+    private String digitRepresentation;
 
+    Integer status = -1;
+    Boolean malformed;
+    Boolean error;
+    Boolean ambiguous;
+    
     public OCREntry(CellRow cr) {
         init();
         build(cr);
@@ -59,16 +64,39 @@ public class OCREntry {
             integers.add(number);
             d = new Digit(cell, number);
             digits.add(d);
+            malformed = d.isValid();
+            digitRepresentation += d.getRepresentation();
+
         }
         buildChecksum(integers);
+        resolveStatus();
     }
 
     private void buildChecksum(List<Integer> integers) {
         checksum = new Checksum(integers, ApplicationProperties.Entries.CHECKSUM_MODULO);
+        error = checksum.isValid();
+        
+         // TODO Resolve ambiguous 
+    }
+
+    private void resolveStatus() {
+        if(malformed){
+            status = 0;
+        }
+        else if(error) {
+            status = 1;
+        }
+        else if(ambiguous) {
+            status = 2;
+        }
     }
 
     private void init() {
         digits = new ArrayList<>();
+        digitRepresentation = "";
+        malformed = false;
+        error = false;
+        ambiguous = false;
     }
 
     public List<Digit> getDigits() {
@@ -77,6 +105,20 @@ public class OCREntry {
 
     public Checksum getChecksum() {
         return checksum;
+    }
+
+    public String getDigitRepresentation() {
+        return digitRepresentation;
+    }
+
+    public Status getStatus() {
+        return Status.values()[status];
+    }
+
+    public enum Status {
+        Malformed,
+        Error,
+        Ambiguous
     }
 
 }
