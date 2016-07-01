@@ -81,8 +81,18 @@ import java.util.Objects;
         return hash;
     }
     
-    public String createRepresentation(){
+    private String createRepresentation(){
         if(validDigit) return number.toString();
         else return DigitMethods.getInvalidRepresentation();
     }
+
+    public String getRepresentation() {
+        return representation;
+    }
+
+    public Boolean isValid() {
+        return validDigit;
+    }
+    
+    
 }
