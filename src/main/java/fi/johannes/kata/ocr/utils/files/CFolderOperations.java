@@ -89,7 +89,6 @@ public class CFolderOperations {
      * @return
      * @throws IOException
      */
-    // TODO Maybe add chunk based reading (?)
     public static LinkedList<List<String>> readAllFilesInFolder(String folder) throws IOException {
         LinkedList<List<String>> l = new LinkedList<>();
         Files.walk(Paths.get(folder)).forEach(filePath -> {
@@ -129,7 +128,6 @@ public class CFolderOperations {
      * Removes folder and everything inside it
      * @param folder 
      */
-    // TODO This doesn't work always, need to be tested
     public static void recursiveDelete(String folder) {
         File f = new File(folder);
         if (f.exists() && f.isDirectory()) {

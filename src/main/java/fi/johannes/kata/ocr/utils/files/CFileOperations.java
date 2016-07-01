@@ -44,7 +44,6 @@ import java.util.List;
 import org.apache.commons.io.FilenameUtils;
 
 /**
- * TODO Test at some point
  * @author Johannes töissä
  */
 public class CFileOperations {
@@ -172,25 +171,6 @@ public class CFileOperations {
     }
 
 
-/*
-    public static File[] getFilesInFolder(String path) {
-        //TODO Throw exception if it's not folder
-        File folder = new File(path);
-        File[] listOfFiles = folder.listFiles();
-        return listOfFiles;
-    }
-
-    public static List<String> getFilenamesInFolder(String path) {
-        File[] files = getFilesInFolder(path);
-        List<String> names = new ArrayList<>();
-        for (File file : files) {
-            if (file.isFile()) {
-                names.add(file.getName());
-            }
-        }
-        return names;
-    }
-*/
     public static void createChunksByRowsAndBytes(String inputFile, String outputFolder, int bufferSize, int rows) throws FileNotFoundException, IOException {
         File f = new File(inputFile);
         String filename = f.getName();
@@ -199,7 +179,6 @@ public class CFileOperations {
         int j = 0;
         for (int i = 0; i <= rows; i++) {
             String lineStr = bw.readLine();
-            // TODO Process each line
             if (lineStr != null) {
                 byte[] line = lineStr.getBytes(StandardCharsets.UTF_8);
                 if (i == rows) {
@@ -225,7 +204,6 @@ public class CFileOperations {
         int j = 0;
         for (int i = 0; i <= rows; i++) {
             String lineStr = bw.readLine();
-            // TODO Process each line
             if (lineStr != null) {
                 char[] line = lineStr.toCharArray();
                 if (i == rows) {
