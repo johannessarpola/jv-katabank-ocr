@@ -38,11 +38,11 @@ import org.apache.commons.io.FilenameUtils;
  * @author Johannes Sarpola <johannes.sarpola at gmail.com>
  * @date Jun 30, 2016
  */
-public class FileConnection {
+public class ExistingFileConnection {
 
     Path p;
 
-    public FileConnection(String path) throws FileNotFoundException {
+    public ExistingFileConnection(String path) throws FileNotFoundException {
         p = Paths.get(path);
         testExistence();
     }
