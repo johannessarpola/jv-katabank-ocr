@@ -24,12 +24,11 @@
 package fi.johannes.kata.ocr.utils.structs;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -45,7 +44,7 @@ public class FilenameTest {
 
     @Before
     public void setUp() throws IOException {
-        fn = new Filename("./testfile.txt");
+        fn = new Filename("testfile.txt");
         fn2 = new Filename("afile.md");
     }
 
@@ -53,14 +52,14 @@ public class FilenameTest {
      * Test of getFilename method, of class Filename.
      */
     @Test
-    public void testFilename() {
+    public void testFilename() throws IOException {
         String exp = "testfile";
         String exp2 = "txt";
 
         String exp3 = "afile";
         String exp4 = "md";
         String exp5 = "afile.md";
-        
+
         System.out.println(fn.getFullpath());
         System.out.println(fn2.getFullpath());
 
@@ -69,6 +68,12 @@ public class FilenameTest {
         assertEquals(exp3, fn2.getName());
         assertEquals(exp4, fn2.getExtension());
         assertEquals(exp5, fn2.getFilename());
+
+        Path p = Paths.get("mustbefile.txt");
+        Filename fn3 = new Filename(p);
+        assertEquals("mustbefile", fn3.getName());
+        assertEquals("txt", fn3.getExtension());
+
     }
 
 }

@@ -31,6 +31,7 @@ import org.apache.commons.io.FilenameUtils;
 
 /**
  * Caches the relevant infos for a filename
+ *
  * @author Johannes Sarpola
  * @date Jul 1, 2016
  */
@@ -42,14 +43,27 @@ public class Filename {
     String extension;
 
     public Filename(String filename) throws IOException {
-        if (!CFilePathOperations.validatePath(name)) {
+        if (CFilePathOperations.validatePath(filename)) {
             absolutePath = Paths.get(filename).toAbsolutePath();
-            this.fullpath = FilenameUtils.getFullPath(absolutePath.toString());
-            this.name = FilenameUtils.getBaseName(absolutePath.toString());
-            this.extension = FilenameUtils.getExtension(absolutePath.toString());
+            cacheStrings();
         } else {
             throw new IOException();
         }
+    }
+
+    public Filename(Path filename) throws IOException {
+        if (CFilePathOperations.validatePath(filename.toString())) {
+            absolutePath = filename.toAbsolutePath();
+            cacheStrings();
+        } else {
+            throw new IOException();
+        }
+    }
+
+    private void cacheStrings() {
+        fullpath = FilenameUtils.getFullPath(absolutePath.toString());
+        name = FilenameUtils.getBaseName(absolutePath.toString());
+        extension = FilenameUtils.getExtension(absolutePath.toString());
     }
 
     public String getFilename() {
@@ -71,5 +85,5 @@ public class Filename {
     public Path getAbsolutePath() {
         return absolutePath;
     }
-    
+
 }
