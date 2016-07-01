@@ -43,7 +43,7 @@ public class OCROutputBuilder {
         List<String> output = new ArrayList<>();
         for (OCREntry entry : entries) {
             String status = statusString(entry.getStatus());
-            String line = entry.getDigitRepresentation() + ApplicationStrings.FIELD_DELIMETER +status;
+            String line = entry.getDigitRepresentation() + ApplicationStrings.FIELD_DELIMETER + status;
             output.add(line);
         }
         return output;
@@ -52,15 +52,17 @@ public class OCROutputBuilder {
     private static String statusString(OCREntry.Status status) {
         if (null != status) {
             switch (status) {
+                case OK:
+                    return ApplicationStrings.OutputBuilder.OK;
                 case Malformed:
-                    return ApplicationStrings.Anomalies.MALFORMED_DIGIT_FIELD;
+                    return ApplicationStrings.OutputBuilder.MALFORMED_DIGIT_FIELD;
                 case InvalidChecksum:
-                    return ApplicationStrings.Anomalies.INVALID_CHECKSUM_FIELD;
+                    return ApplicationStrings.OutputBuilder.INVALID_CHECKSUM_FIELD;
                 case Ambiguous:
-                    return ApplicationStrings.Anomalies.AMBIGUOUS_ENTRY_FIELD;
+                    return ApplicationStrings.OutputBuilder.AMBIGUOUS_ENTRY_FIELD;
             }
         }
-        return ApplicationStrings.Anomalies.INVALID_STATUS;
+        return ApplicationStrings.OutputBuilder.INVALID_STATUS;
 
     }
 }
