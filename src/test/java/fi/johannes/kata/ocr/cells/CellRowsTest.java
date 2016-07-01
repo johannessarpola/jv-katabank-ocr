@@ -23,7 +23,7 @@
  */
 package fi.johannes.kata.ocr.cells;
 
-import fi.johannes.kata.ocr.utils.FileConnection;
+import fi.johannes.kata.ocr.utils.ExistingFileConnection;
 import fi.johannes.kata.ocr.utils.structs.IntegerPair;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -36,6 +36,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -46,7 +47,7 @@ public class CellRowsTest {
     CellRows crs;
     IntegerPair pair;
     Path p;
-    FileConnection fc;
+    ExistingFileConnection fc;
 
     public CellRowsTest() {
     }
@@ -55,7 +56,7 @@ public class CellRowsTest {
     public void setUp() throws FileNotFoundException, IOException {
         URL url = Thread.currentThread().getContextClassLoader().getResource("testrows");
         p = Paths.get(url.getPath().substring(1));
-        fc = new FileConnection(url.getPath().substring(1));
+        fc = new ExistingFileConnection(url.getPath().substring(1));
     }
 
     /**

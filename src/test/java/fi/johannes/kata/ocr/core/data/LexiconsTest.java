@@ -81,16 +81,16 @@ public class LexiconsTest {
         Cell cEight = new Cell(eight);
         Cell cNine = new Cell(nine);
         
-        assertEquals(0, Lexicons.DigitResolver.resolve(cZero).intValue());
-        assertEquals(1, Lexicons.DigitResolver.resolve(cOne).intValue());
-        assertEquals(2, Lexicons.DigitResolver.resolve(cTwo).intValue());
-        assertEquals(3, Lexicons.DigitResolver.resolve(cThree).intValue());
-        assertEquals(4, Lexicons.DigitResolver.resolve(cFour).intValue());
-        assertEquals(5, Lexicons.DigitResolver.resolve(cFive).intValue());
-        assertEquals(6, Lexicons.DigitResolver.resolve(cSix).intValue());
-        assertEquals(7, Lexicons.DigitResolver.resolve(cSeven).intValue());
-        assertEquals(8, Lexicons.DigitResolver.resolve(cEight).intValue());
-        assertEquals(9, Lexicons.DigitResolver.resolve(cNine).intValue());
+        assertEquals(0, Lexicons.DigitLexiconResolver.resolveNumber(cZero).intValue());
+        assertEquals(1, Lexicons.DigitLexiconResolver.resolveNumber(cOne).intValue());
+        assertEquals(2, Lexicons.DigitLexiconResolver.resolveNumber(cTwo).intValue());
+        assertEquals(3, Lexicons.DigitLexiconResolver.resolveNumber(cThree).intValue());
+        assertEquals(4, Lexicons.DigitLexiconResolver.resolveNumber(cFour).intValue());
+        assertEquals(5, Lexicons.DigitLexiconResolver.resolveNumber(cFive).intValue());
+        assertEquals(6, Lexicons.DigitLexiconResolver.resolveNumber(cSix).intValue());
+        assertEquals(7, Lexicons.DigitLexiconResolver.resolveNumber(cSeven).intValue());
+        assertEquals(8, Lexicons.DigitLexiconResolver.resolveNumber(cEight).intValue());
+        assertEquals(9, Lexicons.DigitLexiconResolver.resolveNumber(cNine).intValue());
     }
 
 }

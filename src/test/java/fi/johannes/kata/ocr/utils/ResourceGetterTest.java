@@ -31,6 +31,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  *
@@ -78,7 +80,7 @@ public class ResourceGetterTest {
         String expResult = "txt";
         URL result = ResourceGetter.getUrl(fileName);
         // url has extra '/' in the beginning
-        FileConnection connection = new FileConnection(result.getPath().substring(1));
+        ExistingFileConnection connection = new ExistingFileConnection(result.getPath().substring(1));
         assertEquals(expResult, connection.getExtension());
     }
 
