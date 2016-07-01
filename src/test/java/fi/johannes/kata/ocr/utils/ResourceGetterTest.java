@@ -23,6 +23,7 @@
  */
 package fi.johannes.kata.ocr.utils;
 
+import fi.johannes.kata.ocr.utils.files.ExistingFileConnection;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Reader;
@@ -31,6 +32,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 

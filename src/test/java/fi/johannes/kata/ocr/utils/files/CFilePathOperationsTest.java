@@ -9,9 +9,9 @@ import TestUtils.TestFileUtils;
 import java.io.IOException;
 import java.nio.file.Path;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -49,5 +49,17 @@ public class CFilePathOperationsTest {
         Path result = instance.stringToPath(prefix+nm);
         assertEquals(expResult.toString(), result.toString());
     }
+    @Test
+    public void testValidatePath(){
+        String filename = "afile.md";
+        String filename2 = "test";
+        String filename3 = ":\\/";
+        
+        assertEquals(true, CFilePathOperations.validatePath(filename));
+        assertEquals(true, CFilePathOperations.validatePath(filename2));
+        assertEquals(false, CFilePathOperations.validatePath(filename3));
+        
+    }
+
     
 }

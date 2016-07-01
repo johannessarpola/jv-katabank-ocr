@@ -15,6 +15,7 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -26,6 +27,10 @@ public class CFolderOperationsTest {
     static String testfolder = System.getProperty("user.dir") + "/src/test/resources/testfolder";
 
     public CFolderOperationsTest() {
+    }
+
+    @Before
+    public void setUp() throws Exception {
     }
 
     @After
@@ -69,6 +74,76 @@ public class CFolderOperationsTest {
         assertThat(CFolderOperations.createFolder(testfolder + "3"), is(not(nullValue())));
         assertThat(CFolderOperations.doesFolderExist(testfolder + "3"), is(true));
         CFolderOperations.recursiveDelete(testfolder + "3");
+    }
+
+    /**
+     * Test of getFilesInFolder method, of class CFolderOperations.
+     */
+    @Test
+    public void testGetFilesInFolder_String() {
+    }
+
+    /**
+     * Test of getFilesInFolder method, of class CFolderOperations.
+     */
+    @Test
+    public void testGetFilesInFolder_Path() throws Exception {
+    }
+
+    /**
+     * Test of getFilenamesInFolder method, of class CFolderOperations.
+     */
+    @Test
+    public void testGetFilenamesInFolder() {
+    }
+
+    /**
+     * Test of readAllFilesInFolder method, of class CFolderOperations.
+     */
+    @Test
+    public void testReadAllFilesInFolder() throws Exception {
+    }
+
+    /**
+     * Test of createFolder method, of class CFolderOperations.
+     */
+    @Test
+    public void testCreateFolder_Path() throws Exception {
+    }
+
+    /**
+     * Test of createFolder method, of class CFolderOperations.
+     */
+    @Test
+    public void testCreateFolder_Path_FileAttribute() throws Exception {
+    }
+
+    /**
+     * Test of createFolder method, of class CFolderOperations.
+     */
+    @Test
+    public void testCreateFolder_String() {
+    }
+
+    /**
+     * Test of doesFolderExist method, of class CFolderOperations.
+     */
+    @Test
+    public void testDoesFolderExist() {
+    }
+
+    /**
+     * Test of recursiveDelete method, of class CFolderOperations.
+     */
+    @Test
+    public void testRecursiveDelete() {
+    }
+
+    /**
+     * Test of mergeFiles method, of class CFolderOperations.
+     */
+    @Test
+    public void testMergeFiles() throws Exception {
     }
 
 }
