@@ -120,7 +120,7 @@ public class OCREntry {
     public enum Status {
         OK,
         Malformed,
-        InvalidChecksum,
+        Invalid_Checksum,
         Ambiguous
     }
 

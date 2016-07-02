@@ -56,7 +56,7 @@ public class OCROutputBuilder {
                     return ApplicationStrings.OutputBuilder.OK;
                 case Malformed:
                     return ApplicationStrings.OutputBuilder.MALFORMED_DIGIT_FIELD;
-                case InvalidChecksum:
+                case Invalid_Checksum:
                     return ApplicationStrings.OutputBuilder.INVALID_CHECKSUM_FIELD;
                 case Ambiguous:
                     return ApplicationStrings.OutputBuilder.AMBIGUOUS_ENTRY_FIELD;
