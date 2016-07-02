@@ -42,8 +42,12 @@ import org.junit.Test;
  */
 public class OCREntryTest {
 
+    String malformedZero = "   | ||_|";
     List<Cell> cells;
+    List<Cell> cells2;
+
     CellRow cr;
+    CellRow cr2;
 
     public OCREntryTest() {
     }
@@ -60,6 +64,17 @@ public class OCREntryTest {
                 new Cell(ApplicationData.Digits.Six()),
                 new Cell(ApplicationData.Digits.Five())
         );
+        cells2 = Arrays.asList(
+                new Cell(ApplicationData.Digits.Zero()),
+                new Cell(malformedZero),
+                new Cell(ApplicationData.Digits.Zero()),
+                new Cell(ApplicationData.Digits.Zero()),
+                new Cell(ApplicationData.Digits.Zero()),
+                new Cell(ApplicationData.Digits.Zero()),
+                new Cell(ApplicationData.Digits.Zero()),
+                new Cell(ApplicationData.Digits.Five()),
+                new Cell(ApplicationData.Digits.One())
+        );
         Constructor<CellRow> constructor = CellRow.class.getDeclaredConstructor();
         constructor.setAccessible(true);
         Object[] obj = {"CellRow"};
@@ -67,6 +82,10 @@ public class OCREntryTest {
         Field field = CellRow.class.getDeclaredField("cells");
         field.setAccessible(true);
         field.set(cr, cells);
+
+        cr2 = (CellRow) constructor.newInstance(new Object[0]);
+        field.set(cr2, cells2);
+
     }
 
     /**
@@ -76,9 +95,14 @@ public class OCREntryTest {
     public void testOCREntry() {
 
         OCREntry ocr = new OCREntry(cr);
-
-        assertEquals("345882865", ocr.getDigitRepresentation());
+        assertEquals("345882865", ocr.getDigitsRepresentation());
         assertEquals(Status.OK, ocr.getStatus());
-        assertEquals(cells.size(), ocr.getDigits().size());
+        assertEquals(cells.size(), ocr.getIntegers().size());
+
+        OCREntry ocr2Malform = new OCREntry(cr2);
+        assertEquals("000000051", ocr2Malform.getDigitsRepresentation());
+        assertEquals(Status.OK, ocr2Malform.getStatus());
+        assertEquals(cells.size(), ocr2Malform.getIntegers().size());
+
     }
 }
