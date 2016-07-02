@@ -35,9 +35,9 @@ import java.util.List;
 public class RowBundles<T> implements Iterable<RowBundle<T>> {
 
     private List<RowBundle<T>> bundles;
-    private final int bundleSize;
+    private final Integer bundleSize;
 
-    public RowBundles(List<T> items, int bundleSize) {
+    public RowBundles(List<T> items, Integer bundleSize) {
         this.bundleSize = bundleSize;
         bundles = new ArrayList<>();
         divideToBundles(items);

@@ -38,7 +38,7 @@ public final class Digit {
     private final Cell cell;
     private final Integer number;
     private final String representation;
-    private final Boolean validDigit;
+    private final boolean validDigit;
 
     public Digit(Cell cell) {
         this.cell = cell;
@@ -95,7 +95,7 @@ public final class Digit {
         return representation;
     }
 
-    public Boolean isValid() {
+    public boolean isValid() {
         return validDigit;
     }
 

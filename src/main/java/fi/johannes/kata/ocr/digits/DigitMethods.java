@@ -35,7 +35,7 @@ import java.util.Objects;
  */
 class DigitMethods {
     
-    public static Boolean isValidNumber(Integer numb){
+    public static boolean isValidNumber(Integer numb){
         return !(Objects.equals(numb, Lexicons.DigitLexiconResolver.InvalidNumber()));
     }
     public static String getInvalidRepresentation(){

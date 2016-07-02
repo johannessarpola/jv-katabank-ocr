@@ -23,34 +23,84 @@
  */
 package fi.johannes.kata.ocr.cells;
 
+import fi.johannes.kata.ocr.core.data.ApplicationStrings;
+import fi.johannes.kata.ocr.utils.Logging;
 import java.util.List;
+import org.apache.commons.lang3.ArrayUtils;
 
 /**
- * Cell for the numbers, designed to be built by appending when read line by line, basically a wrapper around StringBuilder.
+ * Cell for the numbers, designed to be built by appending when read line by
+ * line, basically a wrapper around StringBuilder.
+ *
  * @author Johannes Sarpola <johannes.sarpola at gmail.com>
  * @date Jun 25, 2016
  */
 public class Cell {
+
     StringBuilder cellContent;
-    
+    StringBuilder copyOfContent = new StringBuilder();
+    boolean altered = false;
+
     public Cell(String completeString) {
         cellContent = new StringBuilder(completeString);
     }
-    public Cell(List<String> lines){
+
+    public Cell(List<String> lines) {
         cellContent = new StringBuilder();
-        for(String line : lines) {
+        for (String line : lines) {
             cellContent.append(line);
         }
     }
-    public Cell(){
+
+    public Cell() {
         cellContent = new StringBuilder();
     }
-    public void append(String stuff){
+
+    public void append(String stuff) {
         cellContent.append(stuff);
     }
+
     @Override
-    public String toString(){
+    public String toString() {
         return cellContent.toString();
     }
-    
+
+    public Character[] toCharacterArray() {
+        char[] c = cellContent.toString().toCharArray();
+        return ArrayUtils.toObject(c);
+    }
+
+    public char swapChar(int pos, char c) throws ArrayIndexOutOfBoundsException {
+        char original;
+        altered = true;
+        copyOfContent = new StringBuilder(cellContent.toString());
+        try {
+            original = cellContent.charAt(pos);
+            cellContent.setCharAt(pos, c);
+            return original;
+        }
+        catch(Exception e) {
+            ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException = new ArrayIndexOutOfBoundsException();
+            Logging.logMessageWithExpection_Error(this.getClass(), ApplicationStrings.LoggingMessages.Error.CELL_SWAP_AT_INVALID_INDEX, arrayIndexOutOfBoundsException);
+            throw arrayIndexOutOfBoundsException;
+        }
+    }
+    public void keep(){
+        copyOfContent = null;
+    }
+    /**
+     * Resets the cell to original state
+     */
+    public void reset(){
+        altered = false;
+        if(copyOfContent != null && !copyOfContent.toString().equals(cellContent.toString())) {
+            cellContent = new StringBuilder(copyOfContent.toString());
+        }
+        
+    }
+
+    public boolean isAltered() {
+        return altered;
+    }
+
 }

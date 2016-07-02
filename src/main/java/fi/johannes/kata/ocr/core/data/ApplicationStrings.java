@@ -63,6 +63,7 @@ public class ApplicationStrings {
 
             public static final String FOLDER_CONNECTION_UNSUCCESSFUL = "There was problem with establishing connection to folder";
             public static final String COULD_NOT_CONNECT_TO_INPUT = "There was problem with establishing connection to input folder";
+            public static final String CELL_SWAP_AT_INVALID_INDEX = "Tried to swap char which was over the cells content length";
         }
     }
 

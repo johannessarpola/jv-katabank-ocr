@@ -43,9 +43,9 @@ public class OCREntry {
     private String digitRepresentation;
 
     Integer status = 0;
-    Boolean malformed;
-    Boolean error;
-    Boolean ambiguous;
+    boolean malformed;
+    boolean error;
+    boolean ambiguous;
 
     public OCREntry(CellRow cr) {
         init();

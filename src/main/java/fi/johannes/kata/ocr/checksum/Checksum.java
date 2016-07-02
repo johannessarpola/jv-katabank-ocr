@@ -33,8 +33,8 @@ import java.util.List;
  */
 public class Checksum {
 
-    private Boolean valid;
-    private Double checksum;
+    private final boolean valid;
+    private final Double checksum;
     final Integer modulo;
     
     
@@ -67,11 +67,11 @@ public class Checksum {
         }
         return sum;
     }
-    private Boolean validate(){
+    private boolean validate(){
         return checksum%modulo==0;
     }
 
-    public Boolean isValid() {
+    public boolean isValid() {
         return valid;
     }
 

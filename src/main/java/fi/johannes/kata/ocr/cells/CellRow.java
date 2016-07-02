@@ -38,13 +38,13 @@ import java.util.stream.Stream;
 public class CellRow {
 
     private List<Cell> cells;
-    private int celllength;
+    private Integer celllength;
     private Splitter fixedLengthSplitter;
     
     private CellRow(){
         cells = new ArrayList<>();
     }
-    public CellRow(List<String> lines, int cellLength) {
+    public CellRow(List<String> lines, Integer cellLength) {
         init(cellLength);
         cells = readFromList(lines);
     }
