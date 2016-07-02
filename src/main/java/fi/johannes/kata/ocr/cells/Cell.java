@@ -26,6 +26,7 @@ package fi.johannes.kata.ocr.cells;
 import fi.johannes.kata.ocr.core.data.ApplicationStrings;
 import fi.johannes.kata.ocr.utils.Logging;
 import java.util.List;
+import java.util.Objects;
 import org.apache.commons.lang3.ArrayUtils;
 
 /**
@@ -40,6 +41,7 @@ public class Cell {
     StringBuilder cellContent;
     StringBuilder copyOfContent = new StringBuilder();
     boolean altered = false;
+    boolean keep = true;
 
     public Cell(String completeString) {
         cellContent = new StringBuilder(completeString);
@@ -85,7 +87,11 @@ public class Cell {
             throw arrayIndexOutOfBoundsException;
         }
     }
+    /**
+     * Basically just clears the copy buffer, could save couple bytes
+     */
     public void keep(){
+        setKeep(true);
         copyOfContent = null;
     }
     /**
@@ -98,9 +104,52 @@ public class Cell {
         }
         
     }
-
+    /**
+     * Checks if cell is altered
+     * @return 
+     */
     public boolean isAltered() {
         return altered;
     }
+    /**
+     * Performs deep copy of Cell
+     * @return 
+     */
+    public Cell deepCopyOf(){
+        return new Cell(cellContent.toString());
+    }
 
+    public void setKeep(boolean keep) {
+        this.keep = keep;
+    }
+
+    public boolean doKeep() {
+        return keep;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 97 * hash + Objects.hashCode(this.cellContent);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Cell other = (Cell) obj;
+        if (!Objects.equals(this.cellContent.toString(), other.cellContent.toString())) {
+            return false;
+        }
+        return true;
+    }
+    
 }
