@@ -24,19 +24,22 @@
 
 package fi.johannes.kata.ocr.digits;
 
+import fi.johannes.kata.ocr.cells.Cell;
+import fi.johannes.kata.ocr.core.Resolvers;
 import fi.johannes.kata.ocr.core.data.ApplicationStrings;
-import fi.johannes.kata.ocr.core.data.Lexicons;
-import java.util.Objects;
 
 /**
- * Digit specific methods
+ * Digit specific methods, works as interface between the static classes and Digit
  * @author Johannes Sarpola
  * @date Jul 1, 2016
  */
 class DigitMethods {
     
+    public static Integer getNumber(Cell cell) {
+        return Resolvers.CellNumber.resolveNumber(cell);
+    }
     public static boolean isValidNumber(Integer numb){
-        return !(Objects.equals(numb, Lexicons.DigitLexiconResolver.InvalidNumber()));
+        return !Resolvers.CellNumber.isInvalidNumber(numb);
     }
     public static String getInvalidRepresentation(){
         return ApplicationStrings.MALFORMED_DIGIT_REPRESENTATION;

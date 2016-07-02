@@ -24,7 +24,6 @@
 package fi.johannes.kata.ocr.digits;
 
 import fi.johannes.kata.ocr.cells.Cell;
-import fi.johannes.kata.ocr.core.data.Lexicons;
 import java.util.Objects;
 
 /**
@@ -42,7 +41,7 @@ public final class Digit {
 
     public Digit(Cell cell) {
         this.cell = cell;
-        this.number = Lexicons.DigitLexiconResolver.resolveNumber(cell);
+        this.number = DigitMethods.getNumber(cell);
         this.validDigit = DigitMethods.isValidNumber(number);
         this.representation = createRepresentation();
     }
