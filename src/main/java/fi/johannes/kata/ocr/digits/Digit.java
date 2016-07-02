@@ -33,7 +33,7 @@ import java.util.Objects;
  * @author Johannes Sarpola <johannes.sarpola at gmail.com>
  * @date Jul 1, 2016
  */
-public final class Digit {
+public class Digit {
 
     private final Cell cell;
     private final Integer number;
@@ -48,8 +48,8 @@ public final class Digit {
         this.validDigit = DigitMethods.isValidNumber(number);
         this.representation = createRepresentation();
     }
-    
-    
+
+
     public Cell getCell() {
         return cell;
     }
@@ -87,19 +87,43 @@ public final class Digit {
     }
 
     private String createRepresentation() {
-        if (validDigit) {
-            return number.toString();
-        } else {
-            return DigitMethods.getInvalidRepresentation();
-        }
+        return DigitMethods.getStringRepresentation(this.number);
     }
 
     public String getRepresentation() {
         return representation;
     }
 
+    /**
+     * Gets the string representation
+     *
+     * @param d
+     * @return
+     */
+    public static String getRepresentationForDigit(Digit d) {
+        return DigitMethods.getStringRepresentation(d.getNumber());
+    }
+
+    /**
+     * Gets the string representation
+     *
+     * @param number
+     * @return
+     */
+    public static String getRepresentationForInteger(Integer number) {
+        return DigitMethods.getStringRepresentation(number);
+    }
+
     public boolean isValid() {
         return validDigit;
+    }
+
+    public boolean hasAlternatives() {
+        return possibleNumbers.size() > 0;
+    }
+
+    public List<Integer> getPossibleNumbers() {
+        return possibleNumbers;
     }
 
 }

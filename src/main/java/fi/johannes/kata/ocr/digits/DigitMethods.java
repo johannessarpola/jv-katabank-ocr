@@ -26,6 +26,7 @@ package fi.johannes.kata.ocr.digits;
 
 import fi.johannes.kata.ocr.cells.Cell;
 import fi.johannes.kata.ocr.core.Resolvers;
+import fi.johannes.kata.ocr.core.data.ApplicationProperties;
 import fi.johannes.kata.ocr.core.data.ApplicationStrings;
 import java.util.List;
 
@@ -49,5 +50,12 @@ class DigitMethods {
     }
     public static String getInvalidRepresentation(){
         return ApplicationStrings.MALFORMED_DIGIT_REPRESENTATION;
+    }
+    public static String getStringRepresentation(Integer number){
+        if(number.equals(ApplicationProperties.Cells.INVALID_NUMBER)) {
+            return getInvalidRepresentation();
+        }
+        else return number.toString();
+        
     }
 }

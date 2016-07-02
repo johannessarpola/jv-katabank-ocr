@@ -43,7 +43,7 @@ public class OCROutputBuilder {
         List<String> output = new ArrayList<>();
         for (OCREntry entry : entries) {
             String status = statusString(entry.getStatus());
-            String line = entry.getDigitRepresentation() + ApplicationStrings.FIELD_DELIMETER + status;
+            String line = entry.getDigitsRepresentation() + ApplicationStrings.FIELD_DELIMETER + status;
             output.add(line);
         }
         return output;
