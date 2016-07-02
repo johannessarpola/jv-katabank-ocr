@@ -26,7 +26,7 @@ package fi.johannes.kata.ocr.core;
 import fi.johannes.kata.ocr.cells.Cell;
 import fi.johannes.kata.ocr.cells.CellRow;
 import fi.johannes.kata.ocr.core.OCREntry.Status;
-import fi.johannes.kata.ocr.core.data.Lexicons;
+import fi.johannes.kata.ocr.core.data.ApplicationData;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -50,16 +50,15 @@ public class OCREntryTest {
 
     @Before
     public void setUp() throws NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
-        cells = Arrays.asList(
-                new Cell(Lexicons.Digits.Three()),
-                new Cell(Lexicons.Digits.Four()),
-                new Cell(Lexicons.Digits.Five()),
-                new Cell(Lexicons.Digits.Eight()),
-                new Cell(Lexicons.Digits.Eight()),
-                new Cell(Lexicons.Digits.Two()),
-                new Cell(Lexicons.Digits.Eight()),
-                new Cell(Lexicons.Digits.Six()),
-                new Cell(Lexicons.Digits.Five())
+        cells = Arrays.asList(new Cell(ApplicationData.Digits.Three()),
+                new Cell(ApplicationData.Digits.Four()),
+                new Cell(ApplicationData.Digits.Five()),
+                new Cell(ApplicationData.Digits.Eight()),
+                new Cell(ApplicationData.Digits.Eight()),
+                new Cell(ApplicationData.Digits.Two()),
+                new Cell(ApplicationData.Digits.Eight()),
+                new Cell(ApplicationData.Digits.Six()),
+                new Cell(ApplicationData.Digits.Five())
         );
         Constructor<CellRow> constructor = CellRow.class.getDeclaredConstructor();
         constructor.setAccessible(true);

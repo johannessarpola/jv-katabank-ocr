@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2016 Johannes Sarpola.
@@ -21,19 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package fi.johannes.kata.ocr.core.data;
+package fi.johannes.kata.ocr.core;
 
 import fi.johannes.kata.ocr.cells.Cell;
 import java.util.List;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 /**
  *
- * @author Johannes Sarpola <johannes.sarpola at gmail.com>
+ * @author Johannes Sarpola
  */
-public class LexiconsTest {
-
+public class ResolversTest {
+    
+    public ResolversTest() {
+    }
     String zero = " _ " + "| |" + "|_|";
     String one = "   " + "  |" + "  |";
     String two = " _ " + " _|" + "|_ ";
@@ -55,26 +58,6 @@ public class LexiconsTest {
     String possibleOne = "   " + "  |" + "   ";
     String noPossibilities = "   " + "   " + "   ";
 
-    public LexiconsTest() {
-    }
-
-    @Test
-    public void testDigits() {
-        assertEquals(two, Lexicons.Digits.Two());
-        assertEquals(seven, Lexicons.Digits.Seven());
-        assertEquals(four, Lexicons.Digits.Four());
-        assertEquals(eight, Lexicons.Digits.Eight());
-        assertEquals(nine, Lexicons.Digits.Nine());
-        assertEquals(six, Lexicons.Digits.getAsList().get(6));
-        assertEquals(one, Lexicons.Digits.getAsMap().get(1));
-        assertEquals(zero, Lexicons.Digits.getAsMap().get(0));
-        assertEquals(three, Lexicons.Digits.getAsMap().get(3));
-        assertEquals(five, Lexicons.Digits.getAsMap().get(5));
-        assertEquals(10, Lexicons.Digits.getAsList().size());
-        assertEquals(10, Lexicons.Digits.getAsMap().entrySet().size());
-
-    }
-
     @Test
     public void testResolver() {
         // 100 % tests to make sure everything gets resolved correctly
@@ -89,16 +72,16 @@ public class LexiconsTest {
         Cell cEight = new Cell(eight);
         Cell cNine = new Cell(nine);
 
-        assertEquals(0, Lexicons.DigitLexiconResolver.resolveNumber(cZero).intValue());
-        assertEquals(1, Lexicons.DigitLexiconResolver.resolveNumber(cOne).intValue());
-        assertEquals(2, Lexicons.DigitLexiconResolver.resolveNumber(cTwo).intValue());
-        assertEquals(3, Lexicons.DigitLexiconResolver.resolveNumber(cThree).intValue());
-        assertEquals(4, Lexicons.DigitLexiconResolver.resolveNumber(cFour).intValue());
-        assertEquals(5, Lexicons.DigitLexiconResolver.resolveNumber(cFive).intValue());
-        assertEquals(6, Lexicons.DigitLexiconResolver.resolveNumber(cSix).intValue());
-        assertEquals(7, Lexicons.DigitLexiconResolver.resolveNumber(cSeven).intValue());
-        assertEquals(8, Lexicons.DigitLexiconResolver.resolveNumber(cEight).intValue());
-        assertEquals(9, Lexicons.DigitLexiconResolver.resolveNumber(cNine).intValue());
+        assertEquals(0, Resolvers.CellNumber.resolveNumber(cZero).intValue());
+        assertEquals(1, Resolvers.CellNumber.resolveNumber(cOne).intValue());
+        assertEquals(2, Resolvers.CellNumber.resolveNumber(cTwo).intValue());
+        assertEquals(3, Resolvers.CellNumber.resolveNumber(cThree).intValue());
+        assertEquals(4, Resolvers.CellNumber.resolveNumber(cFour).intValue());
+        assertEquals(5, Resolvers.CellNumber.resolveNumber(cFive).intValue());
+        assertEquals(6, Resolvers.CellNumber.resolveNumber(cSix).intValue());
+        assertEquals(7, Resolvers.CellNumber.resolveNumber(cSeven).intValue());
+        assertEquals(8, Resolvers.CellNumber.resolveNumber(cEight).intValue());
+        assertEquals(9, Resolvers.CellNumber.resolveNumber(cNine).intValue());
     }
 
     @Test
@@ -110,12 +93,12 @@ public class LexiconsTest {
         Cell pOne = new Cell(possibleOne);
         Cell nPos = new Cell(noPossibilities);
 
-        List<Integer> pOnes = Lexicons.DigitLexiconResolver.resolveNumberPossibilities(pOne);
-        List<Integer> pFives = Lexicons.DigitLexiconResolver.resolveNumberPossibilities(pFive);
-        List<Integer> pNines = Lexicons.DigitLexiconResolver.resolveNumberPossibilities(pNine);
-        List<Integer> pSevens = Lexicons.DigitLexiconResolver.resolveNumberPossibilities(pSeven);
-        List<Integer> pSixes = Lexicons.DigitLexiconResolver.resolveNumberPossibilities(pSix);
-        List<Integer> nPoss = Lexicons.DigitLexiconResolver.resolveNumberPossibilities(nPos);
+        List<Integer> pOnes = Resolvers.CellNumber.resolveNumberPossibilities(pOne);
+        List<Integer> pFives = Resolvers.CellNumber.resolveNumberPossibilities(pFive);
+        List<Integer> pNines = Resolvers.CellNumber.resolveNumberPossibilities(pNine);
+        List<Integer> pSevens = Resolvers.CellNumber.resolveNumberPossibilities(pSeven);
+        List<Integer> pSixes = Resolvers.CellNumber.resolveNumberPossibilities(pSix);
+        List<Integer> nPoss = Resolvers.CellNumber.resolveNumberPossibilities(nPos);
 
         // should only have -1 and 1
         assertEquals(2, pOnes.size());
@@ -139,4 +122,5 @@ public class LexiconsTest {
         assertEquals(new Integer(-1), nPoss.get(0));
 
     }
+
 }

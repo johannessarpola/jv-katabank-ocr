@@ -24,10 +24,11 @@
 package fi.johannes.kata.ocr.digits;
 
 import fi.johannes.kata.ocr.cells.Cell;
-import fi.johannes.kata.ocr.core.data.Lexicons;
+import fi.johannes.kata.ocr.core.data.ApplicationData;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -44,8 +45,8 @@ public class DigitTest {
 
     @Before
     public void setUp() {
-        cell1 = new Cell(Lexicons.Digits.Four());
-        cell2 = new Cell(Lexicons.Digits.Three());
+        cell1 = new Cell(ApplicationData.Digits.Four());
+        cell2 = new Cell(ApplicationData.Digits.Three());
         cell3 = new Cell("Something");
 
     }
