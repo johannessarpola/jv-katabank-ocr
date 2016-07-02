@@ -48,7 +48,11 @@ public class OCROutputBuilder {
         }
         return output;
     }
-
+    /**
+     * Just switch-case for status to message
+     * @param status
+     * @return 
+     */
     private static String statusString(OCREntry.Status status) {
         if (null != status) {
             switch (status) {
