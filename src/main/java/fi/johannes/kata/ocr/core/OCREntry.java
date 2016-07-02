@@ -42,10 +42,10 @@ public class OCREntry {
     private List<Digit> digits;
     private String digitRepresentation;
 
-    Integer status = 0;
-    boolean malformed;
-    boolean error;
-    boolean ambiguous;
+    private int status = 0;
+    private boolean malformed;
+    private boolean error;
+    private boolean ambiguous;
 
     public OCREntry(CellRow cr) {
         init();
@@ -107,11 +107,16 @@ public class OCREntry {
     public String getDigitRepresentation() {
         return digitRepresentation;
     }
-
+    /**
+     * Just gets the status based on status int
+     * @return 
+     */
     public Status getStatus() {
         return Status.values()[status];
     }
-
+    /**
+     * Public enum to be make status more readable
+     */
     public enum Status {
         OK,
         Malformed,
