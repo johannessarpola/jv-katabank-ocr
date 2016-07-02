@@ -24,6 +24,7 @@
 package fi.johannes.kata.ocr.core.data;
 
 import fi.johannes.kata.ocr.cells.Cell;
+import java.util.List;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -46,6 +47,13 @@ public class LexiconsTest {
     String eight = " _ " + "|_|" + "|_|";
 
     String nine = " _ " + "|_|" + " _|";
+
+    String possibleFive = " _ " + "|_ " + " _|";
+    String possibleNine = " _ " + " _|" + " _|";
+    String possibleSix = " _ " + "|_ " + "| |";
+    String possibleSeven = "   " + "  |" + "  |";
+    String possibleOne = "   " + "  |" + "   ";
+    String noPossibilities = "   " + "   " + "   ";
 
     public LexiconsTest() {
     }
@@ -80,7 +88,7 @@ public class LexiconsTest {
         Cell cSeven = new Cell(seven);
         Cell cEight = new Cell(eight);
         Cell cNine = new Cell(nine);
-        
+
         assertEquals(0, Lexicons.DigitLexiconResolver.resolveNumber(cZero).intValue());
         assertEquals(1, Lexicons.DigitLexiconResolver.resolveNumber(cOne).intValue());
         assertEquals(2, Lexicons.DigitLexiconResolver.resolveNumber(cTwo).intValue());
@@ -93,4 +101,42 @@ public class LexiconsTest {
         assertEquals(9, Lexicons.DigitLexiconResolver.resolveNumber(cNine).intValue());
     }
 
+    @Test
+    public void testPossibleNumberResolver() {
+        Cell pFive = new Cell(possibleFive);
+        Cell pNine = new Cell(possibleNine);
+        Cell pSeven = new Cell(possibleSeven);
+        Cell pSix = new Cell(possibleSix);
+        Cell pOne = new Cell(possibleOne);
+        Cell nPos = new Cell(noPossibilities);
+
+        List<Integer> pOnes = Lexicons.DigitLexiconResolver.resolveNumberPossibilities(pOne);
+        List<Integer> pFives = Lexicons.DigitLexiconResolver.resolveNumberPossibilities(pFive);
+        List<Integer> pNines = Lexicons.DigitLexiconResolver.resolveNumberPossibilities(pNine);
+        List<Integer> pSevens = Lexicons.DigitLexiconResolver.resolveNumberPossibilities(pSeven);
+        List<Integer> pSixes = Lexicons.DigitLexiconResolver.resolveNumberPossibilities(pSix);
+        List<Integer> nPoss = Lexicons.DigitLexiconResolver.resolveNumberPossibilities(nPos);
+
+        // should only have -1 and 1
+        assertEquals(2, pOnes.size());
+        assertEquals(new Integer(1), pOnes.get(1));
+
+        assertEquals(3, pFives.size());
+        assertTrue(pFives.contains(6));
+        assertTrue(pFives.contains(9));
+
+        // Should only have 9 and 3
+        assertEquals(2, pNines.size());
+        // Should only have 1 and 7 
+        assertEquals(2, pSevens.size());
+        assertEquals(new Integer(7), pSevens.get(1));
+
+        // Should only have -1 and 6
+        assertEquals(2, pSixes.size());
+        assertEquals(new Integer(6), pSixes.get(1));
+
+        assertEquals(1, nPoss.size());
+        assertEquals(new Integer(-1), nPoss.get(0));
+
+    }
 }
