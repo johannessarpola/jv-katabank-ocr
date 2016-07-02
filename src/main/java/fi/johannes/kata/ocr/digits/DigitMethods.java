@@ -27,6 +27,7 @@ package fi.johannes.kata.ocr.digits;
 import fi.johannes.kata.ocr.cells.Cell;
 import fi.johannes.kata.ocr.core.Resolvers;
 import fi.johannes.kata.ocr.core.data.ApplicationStrings;
+import java.util.List;
 
 /**
  * Digit specific methods, works as interface between the static classes and Digit
@@ -35,6 +36,9 @@ import fi.johannes.kata.ocr.core.data.ApplicationStrings;
  */
 class DigitMethods {
     
+    public static List<Integer> getPossibleNumbers(Cell cell) {
+        return Resolvers.CellNumber.resolveNumberPossibilities(cell);
+    }
     public static Integer getNumber(Cell cell) {
         return Resolvers.CellNumber.resolveNumber(cell);
     }
