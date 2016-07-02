@@ -24,6 +24,7 @@
 package fi.johannes.kata.ocr.digits;
 
 import fi.johannes.kata.ocr.cells.Cell;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -36,16 +37,19 @@ public final class Digit {
 
     private final Cell cell;
     private final Integer number;
+    private final List<Integer> possibleNumbers;
     private final String representation;
     private final boolean validDigit;
 
     public Digit(Cell cell) {
         this.cell = cell;
         this.number = DigitMethods.getNumber(cell);
+        this.possibleNumbers = DigitMethods.getPossibleNumbers(cell);
         this.validDigit = DigitMethods.isValidNumber(number);
         this.representation = createRepresentation();
     }
-
+    
+    
     public Cell getCell() {
         return cell;
     }

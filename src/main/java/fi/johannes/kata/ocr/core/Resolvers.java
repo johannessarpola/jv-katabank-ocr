@@ -89,8 +89,7 @@ public class Resolvers {
             }
             return integers;
         }
-
-        public static List<Integer> resolveNumberPossibilities(Cell cell) {
+        public static List<Integer> resolveNumberWithPossibilities(Cell cell) {
             List<Cell> permutations = resolvePermutations(cell);
             List<Integer> possibleNumbers = new ArrayList<>();
 

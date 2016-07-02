@@ -37,7 +37,9 @@ import java.util.List;
 class DigitMethods {
     
     public static List<Integer> getPossibleNumbers(Cell cell) {
-        return Resolvers.CellNumber.resolveNumberPossibilities(cell);
+        // First is the original number
+        List<Integer> possibleNumbers = Resolvers.CellNumber.resolveNumberWithPossibilities(cell);
+        return possibleNumbers.subList(1, possibleNumbers.size());
     }
     public static Integer getNumber(Cell cell) {
         return Resolvers.CellNumber.resolveNumber(cell);

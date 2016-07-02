@@ -28,6 +28,8 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  *
@@ -93,12 +95,12 @@ public class ResolversTest {
         Cell pOne = new Cell(possibleOne);
         Cell nPos = new Cell(noPossibilities);
 
-        List<Integer> pOnes = Resolvers.CellNumber.resolveNumberPossibilities(pOne);
-        List<Integer> pFives = Resolvers.CellNumber.resolveNumberPossibilities(pFive);
-        List<Integer> pNines = Resolvers.CellNumber.resolveNumberPossibilities(pNine);
-        List<Integer> pSevens = Resolvers.CellNumber.resolveNumberPossibilities(pSeven);
-        List<Integer> pSixes = Resolvers.CellNumber.resolveNumberPossibilities(pSix);
-        List<Integer> nPoss = Resolvers.CellNumber.resolveNumberPossibilities(nPos);
+        List<Integer> pOnes = Resolvers.CellNumber.resolveNumberWithPossibilities(pOne);
+        List<Integer> pFives = Resolvers.CellNumber.resolveNumberWithPossibilities(pFive);
+        List<Integer> pNines = Resolvers.CellNumber.resolveNumberWithPossibilities(pNine);
+        List<Integer> pSevens = Resolvers.CellNumber.resolveNumberWithPossibilities(pSeven);
+        List<Integer> pSixes = Resolvers.CellNumber.resolveNumberWithPossibilities(pSix);
+        List<Integer> nPoss = Resolvers.CellNumber.resolveNumberWithPossibilities(nPos);
 
         // should only have -1 and 1
         assertEquals(2, pOnes.size());
