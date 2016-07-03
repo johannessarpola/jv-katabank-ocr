@@ -25,7 +25,6 @@ package fi.johannes.kata.ocr.digits;
 
 import fi.johannes.kata.ocr.cells.Cell;
 import fi.johannes.kata.ocr.core.data.ApplicationData;
-import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
