@@ -39,12 +39,16 @@ public class SwapperUtils {
      * @param listOfObjs
      * @param pos
      * @param newObj
-     * @return
+     * @return either the old object if resilientSwap is successfull, otherwise null
      */
-    public static <T> T swap(List<T> listOfObjs, int pos, T newObj) {
-        T original = listOfObjs.get(pos);
-        listOfObjs.set(pos, newObj);
-        return original;
+    public static <T> T resilientSwap(List<T> listOfObjs, int pos, T newObj) {
+        try {
+            T original = listOfObjs.get(pos);
+            listOfObjs.set(pos, newObj);
+            return original;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     /**
@@ -53,15 +57,14 @@ public class SwapperUtils {
      * @param objArr
      * @param pos
      * @param newObj
-     * @return either the old object if swap is successfull, otherwise null
+     * @return either the old object if resilientSwap is successfull, otherwise null
      */
-    public static <T> T swap(T[] objArr, int pos, T newObj) {
+    public static <T> T resilientSwap(T[] objArr, int pos, T newObj) {
         try {
             T original = objArr[pos];
             objArr[pos] = newObj;
             return original;
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
 
