@@ -31,10 +31,13 @@ import fi.johannes.kata.ocr.utils.structs.Filename;
 import fi.johannes.kata.ocr.utils.structs.IntegerPair;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -66,11 +69,16 @@ public class OCR {
     }
 
     private void defaultPaths() {
-        input = ResourceGetter.getPath("ocr/");
-        output = Paths.get("./result");
+        try {
+            input = ResourceGetter.getPath("ocr/");
+            output = Paths.get("./result");
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(OCR.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void run() throws FileNotFoundException, IOException {
+        
         Iterator<Path> pathIter = ioManager.iterator();
         ioManager.createOutputFolder();
         
