@@ -24,7 +24,7 @@
 package fi.johannes.kata.ocr.core.data;
 
 /**
- *
+ * Has application wide Strings
  * @author Johannes Sarpola
  * @date Jul 1, 2016
  */
@@ -46,6 +46,10 @@ public class ApplicationStrings {
         public final static String MALFORMED_DIGIT_FIELD = "ILL";
         public final static String AMBIGUOUS_ENTRY_FIELD = "AMB";
         public final static String INVALID_STATUS = "???";
+        public final static char OPENNING_CHARACTER_FOR_SECONDARY_ENTRIES  = '[';
+        public final static char CLOSING_CHARACTER_FOR_SECONDARY_ENTRIES  = ']';
+        public final static String SECONDARY_ENTRY_DELIMETER = ",";
+
 
     }
 
