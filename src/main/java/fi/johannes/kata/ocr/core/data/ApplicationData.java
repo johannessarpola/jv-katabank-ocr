@@ -38,6 +38,8 @@ public class ApplicationData {
 
     public static final char VERTICAL_BASE = '|';
     public static final char HORIZONTAL_BASE = '_';
+    public static final char EMPTY = ' ';
+    public static final char[] CHAR_ALTERATIONS = {VERTICAL_BASE, HORIZONTAL_BASE, EMPTY};
 
     private static class TetrisBlocks {
 
@@ -146,6 +148,5 @@ public class ApplicationData {
             return map;
         }
     }
-    // Could add alphabet too
 
 }
