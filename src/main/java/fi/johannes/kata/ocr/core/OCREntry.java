@@ -216,4 +216,16 @@ public class OCREntry {
         return secondaryEntryRepresentations;
     }
 
+    public boolean isMalformed() {
+        return malformed;
+    }
+
+    public boolean isError() {
+        return error;
+    }
+
+    public boolean isAmbiguous() {
+        return ambiguous;
+    }
+
 }
