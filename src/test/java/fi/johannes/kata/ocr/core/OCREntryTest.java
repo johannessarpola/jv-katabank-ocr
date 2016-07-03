@@ -32,9 +32,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.List;
-import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -45,9 +45,11 @@ public class OCREntryTest {
     String malformedZero = "   | ||_|";
     List<Cell> cells;
     List<Cell> cells2;
+    List<Cell> cells3;
 
     CellRow cr;
     CellRow cr2;
+    CellRow cr3;
 
     public OCREntryTest() {
     }
@@ -75,6 +77,17 @@ public class OCREntryTest {
                 new Cell(ApplicationData.Digits.Five()),
                 new Cell(ApplicationData.Digits.One())
         );
+        cells3 = Arrays.asList(
+                new Cell(ApplicationData.Digits.Five()),
+                new Cell(ApplicationData.Digits.Five()),
+                new Cell(ApplicationData.Digits.Five()),
+                new Cell(ApplicationData.Digits.Five()),
+                new Cell(ApplicationData.Digits.Five()),
+                new Cell(ApplicationData.Digits.Five()),
+                new Cell(ApplicationData.Digits.Five()),
+                new Cell(ApplicationData.Digits.Five()),
+                new Cell(ApplicationData.Digits.Five())
+        );
         Constructor<CellRow> constructor = CellRow.class.getDeclaredConstructor();
         constructor.setAccessible(true);
         Object[] obj = {"CellRow"};
@@ -86,23 +99,40 @@ public class OCREntryTest {
         cr2 = (CellRow) constructor.newInstance(new Object[0]);
         field.set(cr2, cells2);
 
+        cr3 = (CellRow) constructor.newInstance(new Object[0]);
+        field.set(cr3, cells3);
+
     }
 
     /**
      * Test of getDigits method, of class OCREntry.
      */
     @Test
-    public void testOCREntry() {
+    public void testOk() {
 
         OCREntry ocr = new OCREntry(cr);
         assertEquals("345882865", ocr.getEntryRepresentation());
         assertEquals(Status.OK, ocr.getStatus());
         assertEquals(cells.size(), ocr.getIntegers().size());
+    }
 
+    @Test
+    public void testMalform() {
         OCREntry ocr2Malform = new OCREntry(cr2);
         assertEquals("000000051", ocr2Malform.getEntryRepresentation());
         assertEquals(Status.OK, ocr2Malform.getStatus());
-        assertEquals(cells.size(), ocr2Malform.getIntegers().size());
+        assertEquals(cells2.size(), ocr2Malform.getIntegers().size());
+    }
+    
+    
+    @Test
+    public void testAmbiguous() {
+        OCREntry ocr3Ambiguous = new OCREntry(cr3);
+        assertEquals("555555555", ocr3Ambiguous.getEntryRepresentation());
+        assertEquals(Status.Ambiguous, ocr3Ambiguous.getStatus());
+        assertEquals(cells3.size(), ocr3Ambiguous.getIntegers().size());
+        assertEquals(2, ocr3Ambiguous.getSecondaryEntryRepresentations().size());
 
     }
+
 }
