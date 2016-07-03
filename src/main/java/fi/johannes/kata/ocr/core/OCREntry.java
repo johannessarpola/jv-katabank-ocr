@@ -48,7 +48,7 @@ public class OCREntry {
     // Just store reference to digit here if there are other number possibilities
     // Needs the index as well
     private String entryRepresentation;
-    private List<String> secondaryalternativeEntryRepresentations;
+    private List<String> secondaryEntryRepresentations;
 
     private int statusCode = 0;
     private boolean malformed;
@@ -62,7 +62,7 @@ public class OCREntry {
 
     private void init() {
         integers = new ArrayList<>();
-        secondaryalternativeEntryRepresentations = new ArrayList<>();
+        secondaryEntryRepresentations = new ArrayList<>();
         entryRepresentation = "";
         malformed = false;
         error = false;
@@ -150,7 +150,7 @@ public class OCREntry {
 
                     ambiguous = true;
                     String secondaryRepr = OCREntryMethods.createSecondaryRepresentation(d.getRepresentation(), alternativeInt, index);
-                    secondaryalternativeEntryRepresentations.add(secondaryRepr);
+                    secondaryEntryRepresentations.add(secondaryRepr);
 
                     // if original is malformed or erroneous
                     if (this.statusCode > 0) {
@@ -212,8 +212,8 @@ public class OCREntry {
         return integers;
     }
 
-    public List<String> getSecondaryalternativeEntryRepresentations() {
-        return secondaryalternativeEntryRepresentations;
+    public List<String> getSecondaryEntryRepresentations() {
+        return secondaryEntryRepresentations;
     }
 
 }
