@@ -59,9 +59,12 @@ public class OCROutputBuilder {
     private static String createSecondaryRepresentationListing(List<String> strs) {
         StringBuilder sb = new StringBuilder();
         sb.append(ApplicationStrings.OutputBuilder.OPENNING_CHARACTER_FOR_SECONDARY_ENTRIES);
+        String last = strs.get(strs.size()-1);
         for (String s : strs) {
             sb.append(s);
-            sb.append(ApplicationStrings.OutputBuilder.SECONDARY_ENTRY_DELIMETER);
+            if(!s.equals(last)) {
+                sb.append(ApplicationStrings.OutputBuilder.SECONDARY_ENTRY_DELIMETER);
+            }
         }
         sb.append(ApplicationStrings.OutputBuilder.CLOSING_CHARACTER_FOR_SECONDARY_ENTRIES);
         return sb.toString();
