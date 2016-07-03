@@ -23,9 +23,12 @@
  */
 package fi.johannes.kata.ocr.utils;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -71,9 +74,14 @@ public class ResourceGetter {
         return url.getPath();
     }
 
-    public static Path getPath(String fileName) {
-        // Manual conversion to String so don't need to throw expection from URI conversion
-        String path = getPathAsString(fileName);
-        return Paths.get(path);
+    public static BufferedReader getBufReader(String file) {
+        InputStream in = ResourceGetter.class.getResourceAsStream(file);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        return reader;
+    }
+
+    public static Path getPath(String fileName) throws URISyntaxException {
+        Path path = Paths.get(getUrl(fileName).toURI().getPath());
+        return path;
     }
 }
