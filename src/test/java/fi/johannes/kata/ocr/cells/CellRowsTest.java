@@ -66,7 +66,7 @@ public class CellRowsTest {
         List<String> lines = Files.readAllLines(p);
         int size = lines.size();
         pair = new IntegerPair(2, size / 2);
-        crs = new CellRows(pair, fc);
+        crs = new CellRows(pair,size, fc);
         Iterator<CellRow> iterator = crs.iterator();
         while (iterator.hasNext()) {
             CellRow cellr = iterator.next();

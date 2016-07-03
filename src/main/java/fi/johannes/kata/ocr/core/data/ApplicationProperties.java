@@ -47,5 +47,6 @@ public class ApplicationProperties {
         public static final Integer CELL_WIDTH = 3;
         public static final Integer CELL_HEIGHT = 3;
         public static final Integer INVALID_NUMBER = -1;
+        public static final Integer CELLS_ON_ROW = 9;
     }
 }

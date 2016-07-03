@@ -26,7 +26,6 @@ package fi.johannes.kata.ocr.cells;
 import com.google.common.base.Splitter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * Builds list of three by three cells from input
@@ -39,24 +38,25 @@ public class CellRow {
 
     private List<Cell> cells;
     private Integer celllength;
-    private Splitter fixedLengthSplitter;
-    
-    private CellRow(){
+    private Integer cellsOnRow;
+
+    private CellRow() {
         cells = new ArrayList<>();
     }
+
     public CellRow(List<String> lines, Integer cellLength) {
-        init(cellLength);
+        init(cellLength, -1);
         cells = readFromList(lines);
     }
 
-    public CellRow(Stream stream, int cellLength) {
-        init(cellLength);
-        cells = readCellsFromStream(stream);
+    public CellRow(List<String> lines, Integer cellLength, Integer cellsOnRow) {
+        init(cellLength, cellsOnRow);
+        cells = readFromList(lines);
     }
 
-    private void init(int cellLength) {
+    private void init(int cellLength, Integer cellsOnRow) {
         this.celllength = cellLength;
-        this.fixedLengthSplitter = Splitter.fixedLength(celllength);
+        this.cellsOnRow = cellsOnRow;
 
     }
 
@@ -112,8 +112,18 @@ public class CellRow {
      */
     private List<Cell> readFromList(List<String> ls) {
         List<Cell> tCell = new ArrayList<>();
+
+        Splitter rowSplitter;
+        if (cellsOnRow != -1) {
+            rowSplitter = Splitter.fixedLength(cellsOnRow * celllength);
+        } else {
+            rowSplitter = Splitter.fixedLength(ls.get(0).length());
+        }
+        Splitter cellSplitter = Splitter.fixedLength(celllength);;
         for (String line : ls) {
-            List<String> parts = fixedLengthSplitter.splitToList(line);
+            String fixedWidthLine = rowSplitter.splitToList(line).get(0);
+
+            List<String> parts = cellSplitter.splitToList(fixedWidthLine);
             for (int i = 0; i < parts.size(); i++) {
                 // if cell doesn't exist yet create
                 try {
@@ -130,17 +140,4 @@ public class CellRow {
         return tCell;
     }
 
-    /**
-     * Reads from stream
-     *
-     * @param st
-     * @return
-     */
-    private List<Cell> readCellsFromStream(Stream<String> st) {
-        List<String> lines = new ArrayList<>();
-        st.forEach((String t) -> {
-            lines.add(t);
-        });
-        return readFromList(lines);
-    }
 }

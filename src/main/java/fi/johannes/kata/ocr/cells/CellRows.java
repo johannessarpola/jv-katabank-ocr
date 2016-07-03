@@ -40,32 +40,34 @@ public class CellRows implements Iterable<CellRow> {
     private List<CellRow> cellRows;
     private Integer height;
     private Integer width;
+    private Integer numbersOnRow;
     private ExistingFileConnection connection;
 
-    public CellRows(IntegerPair pair, ExistingFileConnection connection) throws IOException {
-        init(pair, connection);
+    public CellRows(IntegerPair pair, Integer numbersOnRow, ExistingFileConnection connection) throws IOException {
+        init(pair, numbersOnRow, connection);
         buildRows();
     }
 
-    private void init(IntegerPair pair, ExistingFileConnection connection) {
-        this.height = pair.getY();
+    private void init(IntegerPair pair, Integer numbersOnRow, ExistingFileConnection connection) {
         this.width = pair.getX();
+        this.height = pair.getY();
+        this.numbersOnRow = numbersOnRow;
         this.connection = connection;
         cellRows = new ArrayList<>();
 
     }
-   
-    private void buildRows() throws IOException{
+
+    private void buildRows() throws IOException {
         List<String> lines = connection.readLines();
         RowBundles<String> bundles = new RowBundles<>(lines, height);
         Iterator<RowBundle<String>> iterator = bundles.iterator();
         while (iterator.hasNext()) {
             RowBundle<String> rb = iterator.next();
-            CellRow cr = new CellRow(rb.getRows(), width);
+            CellRow cr = new CellRow(rb.getRows(), width, numbersOnRow);
             cellRows.add(cr);
         }
     }
-    
+
     @Override
     public Iterator<CellRow> iterator() {
         CellRows instance = this;
@@ -89,6 +91,5 @@ public class CellRows implements Iterable<CellRow> {
         };
         return it;
     }
-
 
 }

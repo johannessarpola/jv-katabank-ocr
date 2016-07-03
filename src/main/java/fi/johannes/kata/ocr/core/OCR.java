@@ -75,6 +75,7 @@ public class OCR {
         ioManager.createOutputFolder();
         
         IntegerPair cellSize = new IntegerPair(ApplicationProperties.Cells.CELL_WIDTH, ApplicationProperties.Cells.CELL_HEIGHT);
+        Integer cellsOnRow = ApplicationProperties.Cells.CELLS_ON_ROW;
         CellRows crs;
         List<OCREntry> entries;
         List<String> entriesStr;
@@ -83,7 +84,7 @@ public class OCR {
         while (pathIter.hasNext()) {
             Path p = pathIter.next();
             source = new Filename(p);
-            crs = createCellRows(p, cellSize);
+            crs = createCellRows(p, cellSize, cellsOnRow);
             entries = OCREntryBuilder.buildEntries(crs);
             entriesStr = OCROutputBuilder.buildOutput(entries);
             ioManager.writeToFile(source, entriesStr);
@@ -94,8 +95,8 @@ public class OCR {
         ioManager.clearOutputfolder();
         
     }
-    private CellRows createCellRows(Path p, IntegerPair cellSize) throws FileNotFoundException, IOException {
+    private CellRows createCellRows(Path p, IntegerPair cellSize, Integer cellsOnRow) throws FileNotFoundException, IOException {
         ExistingFileConnection efc = new ExistingFileConnection(p);
-        return new CellRows(cellSize, efc);
+        return new CellRows(cellSize,cellsOnRow,efc);
     }
 }
