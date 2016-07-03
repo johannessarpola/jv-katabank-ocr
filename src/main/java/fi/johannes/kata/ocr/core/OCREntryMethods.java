@@ -23,6 +23,8 @@
  */
 package fi.johannes.kata.ocr.core;
 
+import fi.johannes.kata.ocr.checksum.Checksum;
+import fi.johannes.kata.ocr.core.data.ApplicationProperties;
 import fi.johannes.kata.ocr.digits.Digit;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,5 +72,7 @@ class OCREntryMethods {
         return ints;
     }
 
-
+    static Checksum buildChecksum(List<Integer> integers) {
+        return new Checksum(integers, ApplicationProperties.Validation.CHECKSUM_MODULO);
+    }
 }

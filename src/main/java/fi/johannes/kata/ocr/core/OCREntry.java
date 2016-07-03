@@ -26,7 +26,6 @@ package fi.johannes.kata.ocr.core;
 import fi.johannes.kata.ocr.cells.Cell;
 import fi.johannes.kata.ocr.cells.CellRow;
 import fi.johannes.kata.ocr.checksum.Checksum;
-import fi.johannes.kata.ocr.core.data.ApplicationProperties;
 import fi.johannes.kata.ocr.core.data.ApplicationStrings;
 import fi.johannes.kata.ocr.digits.Digit;
 import java.util.ArrayList;
@@ -91,7 +90,7 @@ public class OCREntry {
             entryRepresentation += d.getRepresentation();
 
         }
-        checksum = buildChecksum(integers);
+        checksum = OCREntryMethods.buildChecksum(integers);
         resolveStatus();
         if (digitsWithAlternatives.keySet().size() > 0) {
             createAlternativeRepresentations(digitsWithAlternatives);
@@ -103,9 +102,7 @@ public class OCREntry {
         return !checksum.isValid();
     }
 
-    private Checksum buildChecksum(List<Integer> integers) {
-        return new Checksum(integers, ApplicationProperties.Validation.CHECKSUM_MODULO);
-    }
+
 
     private void resolveStatus() {
         malformed = entryRepresentation.contains(ApplicationStrings.MALFORMED_DIGIT_REPRESENTATION);
@@ -125,16 +122,17 @@ public class OCREntry {
     /**
      * Gets the alternative representations for possibilities
      */
-    private void createAlternativeRepresentations(Map<Integer, Digit> digitsWithAlternatives) {
+    private void createAlternativeRepresentations(Map<Integer, Digit> digitsWithSecondaries) {
         
         // Store the first valids if the original is invalid
         String firstValidSecondaryRepr = "";
         List<Integer> firstValidSecondaryIntegers = new ArrayList<>();
         Checksum firstValidSecondarChecksum = null;
 
-        int alternativeValidChecksums = 0;
+        // keeps track hwo many secondaries with valid checksums
+        int secondariesValidChecksums = 0;
 
-        for (Entry<Integer, Digit> e : digitsWithAlternatives.entrySet()) {
+        for (Entry<Integer, Digit> e : digitsWithSecondaries.entrySet()) {
             
             // Index pointer to a spot in list of integers 
             Integer index = e.getKey();
@@ -145,7 +143,7 @@ public class OCREntry {
 
                 // Do alternative list of integers 
                 List<Integer> alternativeIntegers = OCREntryMethods.createSecondaryIntegerList(integers, index, alternativeInt);
-                Checksum altCheck = buildChecksum(alternativeIntegers);
+                Checksum altCheck = OCREntryMethods.buildChecksum(alternativeIntegers);
 
                 // Create alternative reprensentation if alt checksum is valid
                 if (altCheck.isValid()) {
@@ -156,16 +154,16 @@ public class OCREntry {
 
                     // if original is malformed or erroneous
                     if (this.statusCode > 0) {
-                        if (alternativeValidChecksums < 1) {
+                        if (secondariesValidChecksums < 1) {
                             firstValidSecondarChecksum = altCheck;
                             firstValidSecondaryIntegers = alternativeIntegers;
                             firstValidSecondaryRepr = secondaryRepr;
                         }
                         // If there are multiple valids we need to increment as it'll stay ambiguous
-                        alternativeValidChecksums++;
+                        secondariesValidChecksums++;
                     }
                     // If there is only one valid alternative -> make it the entry
-                    if (alternativeValidChecksums == 1 && this.statusCode > 0 && firstValidSecondarChecksum.isValid()) {
+                    if (secondariesValidChecksums == 1 && this.statusCode > 0 && firstValidSecondarChecksum.isValid()) {
                         reinitializeAttributes(firstValidSecondaryIntegers, firstValidSecondarChecksum, firstValidSecondaryRepr);
                         // It's not ambiguous anymore if there was only one alternative
                         ambiguous = false;
@@ -183,11 +181,6 @@ public class OCREntry {
         this.entryRepresentation = representation;
         resolveStatus();
     }
-
-
-
-
-
     public Checksum getChecksum() {
         return checksum;
     }
