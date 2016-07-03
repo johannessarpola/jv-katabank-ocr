@@ -23,7 +23,6 @@
  */
 package fi.johannes.kata.ocr.checksum;
 
-import com.google.common.collect.Lists;
 import java.util.List;
 
 /**
@@ -56,14 +55,14 @@ public class Checksum {
      *
      */
     private Double calculateChecksum(List<Integer> numbers) {
-        List<Integer> tNumbers = Lists.reverse(numbers);
+        // List<Integer> numbers = Lists.reverse(numbers);
         Double sum = 0.;
-        Integer j = 1;
-        for (Integer i = 0; i < tNumbers.size(); i++) {
-            Integer val = tNumbers.get(i);
+        int j = numbers.size();
+        for (int i = 0; i < numbers.size(); i++) {
+            int val = numbers.get(i);
             val = val * j;
             sum += val;
-            j++;
+            j--;
         }
         return sum;
     }

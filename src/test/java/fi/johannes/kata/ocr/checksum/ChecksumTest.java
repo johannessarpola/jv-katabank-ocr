@@ -57,11 +57,11 @@ public class ChecksumTest {
     }
 
     @Test
-    public void testChecksum() {
+    public void testChecksumInvalid() {
         // account number:  3  4  5  8  8  2  8  6  5
         // position names:  d9 d8 d7 d6 d5 d4 d3 d2 d1
         // (d1+2*d2+3*d3 +..+9*d9) mod 11 = 0
-        
+
         System.out.println("test checksum");
         Double expect = 3 * 1 + 2 * 2 + 1 * 3.;
         Double expect2 = 97 * 1 + (-98) * 2 + 99 * 3.;
@@ -71,6 +71,12 @@ public class ChecksumTest {
 
         assertEquals(false, checksum.isValid());
         assertEquals(true, checksum2.isValid());
+
+    }
+
+    @Test
+    public void testChecksumValid() {
+
         assertEquals(true, checksum3.isValid());
 
     }
