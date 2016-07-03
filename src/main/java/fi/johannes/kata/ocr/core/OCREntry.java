@@ -108,7 +108,7 @@ public class OCREntry {
         if (malformed) {
             statusCode = 1;
         }
-        if (error) {
+        if (error && !malformed) {
             statusCode = 2;
         }
         if (ambiguous) {
