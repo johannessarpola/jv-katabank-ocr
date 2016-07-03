@@ -58,6 +58,7 @@ public class ResolversTest {
     String possibleOne = "   " + "  |" + "   ";
     String noPossibilities = "   " + "   " + "   ";
     String possibleOne2 = "    _|  |";
+    String possibleNine2 = " _ |_| _ ";
 
     @Test
     public void testResolver() {
@@ -89,6 +90,7 @@ public class ResolversTest {
     public void testPossibleNumberResolver() {
         Cell pFive = new Cell(possibleFive);
         Cell pNine = new Cell(possibleNine);
+        Cell pNine2 = new Cell(possibleNine2);
         Cell pSeven = new Cell(possibleSeven);
         Cell pSix = new Cell(possibleSix);
         Cell pOne = new Cell(possibleOne);
@@ -101,6 +103,7 @@ public class ResolversTest {
 
         List<Integer> pFives = Resolvers.CellNumber.resolveNumberWithPossibilities(pFive);
         List<Integer> pNines = Resolvers.CellNumber.resolveNumberWithPossibilities(pNine);
+        List<Integer> pNines2 = Resolvers.CellNumber.resolveNumberWithPossibilities(pNine2);
         List<Integer> pSevens = Resolvers.CellNumber.resolveNumberWithPossibilities(pSeven);
         List<Integer> pSixes = Resolvers.CellNumber.resolveNumberWithPossibilities(pSix);
         List<Integer> nPoss = Resolvers.CellNumber.resolveNumberWithPossibilities(nPos);
@@ -112,13 +115,17 @@ public class ResolversTest {
         // should be 1, 7 and -1
         assertEquals(3, pOnes2.size());
         assertTrue(pOnes2.contains(1));
-        
+
         assertEquals(3, pFives.size());
         assertTrue(pFives.contains(6));
         assertTrue(pFives.contains(9));
 
         // Should only have 9 and 3
         assertEquals(2, pNines.size());
+        
+        assertEquals(2, pNines2.size());
+        assertEquals(new Integer(9), pNines.get(1));
+
         // Should only have 1 and 7 
         assertEquals(2, pSevens.size());
         assertEquals(new Integer(7), pSevens.get(1));

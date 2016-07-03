@@ -104,11 +104,11 @@ public class Resolvers {
 
         private static List<Cell> resolvePermutations(Cell cell) {
             // arr 0-8
-            List<Cell> permutations = permutate(cell);
+            List<Cell> permutations = resolveValidPermutations(cell);
             return permutations;
         }
 
-        private static List<Cell> permutate(Cell cellParam) {
+        private static List<Cell> resolveValidPermutations(Cell cellParam) {
             int length = cellParam.toString().length();
             List<Cell> validPermutations = new ArrayList<>();
             char originalChar;
@@ -116,7 +116,7 @@ public class Resolvers {
                 try {
                     // Deep copy of original to permutate
                     for (char c : ApplicationData.CHAR_ALTERATIONS) {
-                        permutateCell(cellParam, validPermutations, c, i);
+                        permutate(cellParam, validPermutations, c, i);
                     }
 
                 } catch (Exception e) {
@@ -127,14 +127,14 @@ public class Resolvers {
             return validPermutations;
         }
 
-        private static void permutateCell(Cell cellParam, List<Cell> validPermutations, char toBeSwapped, int position) {
+        private static void permutate(Cell cellParam, List<Cell> validPermutations, char toBeSwapped, int position) {
             char originalChar;
             // Deep copy of original to permutate
             Cell copyOfCell = cellParam.deepCopyOf();
 
             // Try adding vertical base
             originalChar = copyOfCell.swapChar(position, toBeSwapped);
-            copyOfCell = checkCell(copyOfCell, originalChar, position);
+            copyOfCell = vaidatePermutation(copyOfCell, originalChar, position);
             if (copyOfCell.doKeep() && !cellParam.equals(copyOfCell)) {
                 validPermutations.add(copyOfCell);
             }
@@ -148,7 +148,7 @@ public class Resolvers {
          * @param position
          * @return original if it was not, altered if it was
          */
-        private static Cell checkCell(Cell cell, char original, int position) {
+        private static Cell vaidatePermutation(Cell cell, char original, int position) {
             // Check if it's valid
             if (!resolveNumber(cell).equals(ApplicationProperties.Cells.INVALID_NUMBER)) {
                 cell.keep();
