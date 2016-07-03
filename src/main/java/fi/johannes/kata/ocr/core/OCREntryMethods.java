@@ -42,12 +42,15 @@ class OCREntryMethods {
      * @param alternative
      * @return
      */
-    static String createSecondaryRepresentation(String originalRepresentation, Integer alternative, Integer index) {
-        StringBuilder alternativeOcrStr = new StringBuilder(originalRepresentation);
+    static String createSecondaryRepresentation(String wholeRepresentation,
+            String originalDigitRepresentation,
+            Integer alternative,
+            Integer index) {
+        StringBuilder alternativeOcrStr = new StringBuilder(wholeRepresentation);
         // Gets the String representation of Digits number
         String repr = Digit.getRepresentationForInteger(alternative);
         // Remove the old representation
-        alternativeOcrStr.delete(index, originalRepresentation.length() + index);
+        alternativeOcrStr.delete(index, originalDigitRepresentation.length() + index);
         // Insert the new one
         alternativeOcrStr.insert(index, repr);
         // Add it to alternative representations
@@ -74,5 +77,8 @@ class OCREntryMethods {
 
     static Checksum buildChecksum(List<Integer> integers) {
         return new Checksum(integers, ApplicationProperties.Validation.CHECKSUM_MODULO);
+    }
+    static boolean isValidIntegerList(List<Integer> integers) {
+        return !integers.contains(ApplicationProperties.Cells.INVALID_NUMBER);
     }
 }

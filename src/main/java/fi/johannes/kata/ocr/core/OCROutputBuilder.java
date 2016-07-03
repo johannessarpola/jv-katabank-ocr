@@ -36,22 +36,42 @@ public class OCROutputBuilder {
 
     /**
      * Builds output from a list of entries
+     *
      * @param entries
-     * @return 
+     * @return
      */
     public static List<String> buildOutput(List<OCREntry> entries) {
         List<String> output = new ArrayList<>();
         for (OCREntry entry : entries) {
             String status = statusString(entry.getStatus());
-            String line = entry.getEntryRepresentation() + ApplicationStrings.FIELD_DELIMETER + status;
-            output.add(line);
+            StringBuilder line = new StringBuilder(entry.getEntryRepresentation());
+            line.append(ApplicationStrings.FIELD_DELIMETER);
+            line.append(status);
+            line.append(ApplicationStrings.FIELD_DELIMETER);
+            if (entry.isAmbiguous()) {
+                line.append(createSecondaryRepresentationListing(entry.getSecondaryEntryRepresentations()));
+            }
+            output.add(line.toString());
         }
         return output;
     }
+
+    private static String createSecondaryRepresentationListing(List<String> strs) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(ApplicationStrings.OutputBuilder.OPENNING_CHARACTER_FOR_SECONDARY_ENTRIES);
+        for (String s : strs) {
+            sb.append(s);
+            sb.append(ApplicationStrings.OutputBuilder.SECONDARY_ENTRY_DELIMETER);
+        }
+        sb.append(ApplicationStrings.OutputBuilder.CLOSING_CHARACTER_FOR_SECONDARY_ENTRIES);
+        return sb.toString();
+    }
+
     /**
      * Just switch-case for status to message
+     *
      * @param status
-     * @return 
+     * @return
      */
     private static String statusString(OCREntry.Status status) {
         if (null != status) {

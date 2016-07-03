@@ -28,11 +28,9 @@ import fi.johannes.kata.ocr.cells.CellRow;
 import fi.johannes.kata.ocr.checksum.Checksum;
 import fi.johannes.kata.ocr.core.data.ApplicationStrings;
 import fi.johannes.kata.ocr.digits.Digit;
+import fi.johannes.kata.ocr.utils.structs.Pair;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  *
@@ -58,6 +56,7 @@ public class OCREntry {
     public OCREntry(CellRow cr) {
         init();
         build(cr);
+        resolveStatus();
     }
 
     private void init() {
@@ -72,7 +71,8 @@ public class OCREntry {
     private void build(CellRow cr) {
         List<Cell> cells = cr.getAsList();
         List<Digit> digits = new ArrayList<>();
-        Map<Integer, Digit> digitsWithAlternatives = new HashMap<>();
+        //Map<Integer, Digit> digitsWithAlternatives = new HashMap<>();
+        List<DigitIndexPair> digitsWithAlternatives = new ArrayList<>();
         Digit d;
         Integer number;
 
@@ -84,7 +84,7 @@ public class OCREntry {
             digits.add(d);
             // Store reference to digits with alternatives here
             if (d.hasAlternatives()) {
-                digitsWithAlternatives.put(digits.size() - 1, d);
+                digitsWithAlternatives.add(new DigitIndexPair(digits.size() - 1, d));
             }
             // each digit is tested here for validity
             entryRepresentation += d.getRepresentation();
@@ -92,7 +92,7 @@ public class OCREntry {
         }
         checksum = OCREntryMethods.buildChecksum(integers);
         resolveStatus();
-        if (digitsWithAlternatives.keySet().size() > 0) {
+        if (digitsWithAlternatives.size() > 0) {
             createAlternativeRepresentations(digitsWithAlternatives);
         }
     }
@@ -102,19 +102,19 @@ public class OCREntry {
         return !checksum.isValid();
     }
 
-
-
     private void resolveStatus() {
         malformed = entryRepresentation.contains(ApplicationStrings.MALFORMED_DIGIT_REPRESENTATION);
         error = isChecksumInvalid(checksum);
-
         if (malformed) {
             statusCode = 1;
-        } else if (error) {
+        }
+        if (error) {
             statusCode = 2;
-        } else if (ambiguous) {
+        }
+        if (ambiguous) {
             statusCode = 3;
-        } else {
+        }
+        if (!malformed && !error && !ambiguous) {
             statusCode = 0;
         }
     }
@@ -122,8 +122,8 @@ public class OCREntry {
     /**
      * Gets the alternative representations for possibilities
      */
-    private void createAlternativeRepresentations(Map<Integer, Digit> digitsWithSecondaries) {
-        
+    private void createAlternativeRepresentations(List<DigitIndexPair> digitsWithSecondaries) {
+
         // Store the first valids if the original is invalid
         String firstValidSecondaryRepr = "";
         List<Integer> firstValidSecondaryIntegers = new ArrayList<>();
@@ -132,12 +132,12 @@ public class OCREntry {
         // keeps track hwo many secondaries with valid checksums
         int secondariesValidChecksums = 0;
 
-        for (Entry<Integer, Digit> e : digitsWithSecondaries.entrySet()) {
-            
+        for (DigitIndexPair pair : digitsWithSecondaries) {
+
             // Index pointer to a spot in list of integers 
-            Integer index = e.getKey();
+            Integer index = pair.getIndex();
             // Digit has it's alternatives
-            Digit d = e.getValue();
+            Digit d = pair.getDigit();
 
             for (Integer alternativeInt : d.getPossibleNumbers()) {
 
@@ -146,41 +146,40 @@ public class OCREntry {
                 Checksum altCheck = OCREntryMethods.buildChecksum(alternativeIntegers);
 
                 // Create alternative reprensentation if alt checksum is valid
-                if (altCheck.isValid()) {
+                if (altCheck.isValid() && OCREntryMethods.isValidIntegerList(alternativeIntegers)) {
 
                     ambiguous = true;
-                    String secondaryRepr = OCREntryMethods.createSecondaryRepresentation(d.getRepresentation(), alternativeInt, index);
+                    String secondaryRepr = OCREntryMethods.createSecondaryRepresentation(entryRepresentation, d.getRepresentation(), alternativeInt, index);
                     secondaryEntryRepresentations.add(secondaryRepr);
 
                     // if original is malformed or erroneous
-                    if (this.statusCode > 0) {
-                        if (secondariesValidChecksums < 1) {
-                            firstValidSecondarChecksum = altCheck;
-                            firstValidSecondaryIntegers = alternativeIntegers;
-                            firstValidSecondaryRepr = secondaryRepr;
-                        }
-                        // If there are multiple valids we need to increment as it'll stay ambiguous
-                        secondariesValidChecksums++;
+                    if (secondariesValidChecksums < 1) {
+                        firstValidSecondarChecksum = altCheck;
+                        firstValidSecondaryIntegers = alternativeIntegers;
+                        firstValidSecondaryRepr = secondaryRepr;
                     }
-                    // If there is only one valid alternative -> make it the entry
-                    if (secondariesValidChecksums == 1 && this.statusCode > 0 && firstValidSecondarChecksum.isValid()) {
-                        reinitializeAttributes(firstValidSecondaryIntegers, firstValidSecondarChecksum, firstValidSecondaryRepr);
-                        // It's not ambiguous anymore if there was only one alternative
-                        ambiguous = false;
+                    // If there are multiple valids we need to increment as it'll stay ambiguous
+                    secondariesValidChecksums++;
 
-                    }
                 }
             }
+
+        }
+        // If there is only one valid alternative -> make it the entry
+        if (secondariesValidChecksums == 1 && this.statusCode > 0) {
+            reinitializeAttributes(firstValidSecondaryIntegers, firstValidSecondarChecksum, firstValidSecondaryRepr);
         }
 
     }
 
     private void reinitializeAttributes(List<Integer> integers, Checksum checksum, String representation) {
+        // It's not ambiguous anymore if there was only one alternative
+        ambiguous = false;
         this.integers = integers;
         this.checksum = checksum;
         this.entryRepresentation = representation;
-        resolveStatus();
     }
+
     public Checksum getChecksum() {
         return checksum;
     }
@@ -228,4 +227,22 @@ public class OCREntry {
         return ambiguous;
     }
 
+    /**
+     * Just specialized class for pair, mostly readability
+     */
+    public static class DigitIndexPair extends Pair<Integer, Digit> {
+
+        public DigitIndexPair(Integer k, Digit v) {
+            super(k, v);
+        }
+
+        Integer getIndex() {
+            return getLeft();
+        }
+
+        Digit getDigit() {
+            return getRight();
+        }
+
+    }
 }
