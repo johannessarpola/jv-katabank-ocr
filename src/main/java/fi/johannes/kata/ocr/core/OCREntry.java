@@ -48,10 +48,10 @@ public class OCREntry {
 
     // Just store reference to digit here if there are other number possibilities
     // Needs the index as well
-    private String digitsRepresentation;
-    private List<String> alternativeRepresentations;
+    private String entryRepresentation;
+    private List<String> secondaryalternativeEntryRepresentations;
 
-    private int status = 0;
+    private int statusCode = 0;
     private boolean malformed;
     private boolean error;
     private boolean ambiguous;
@@ -63,8 +63,8 @@ public class OCREntry {
 
     private void init() {
         integers = new ArrayList<>();
-        alternativeRepresentations = new ArrayList<>();
-        digitsRepresentation = "";
+        secondaryalternativeEntryRepresentations = new ArrayList<>();
+        entryRepresentation = "";
         malformed = false;
         error = false;
         ambiguous = false;
@@ -88,7 +88,7 @@ public class OCREntry {
                 digitsWithAlternatives.put(digits.size() - 1, d);
             }
             // each digit is tested here for validity
-            digitsRepresentation += d.getRepresentation();
+            entryRepresentation += d.getRepresentation();
 
         }
         checksum = buildChecksum(integers);
@@ -108,18 +108,17 @@ public class OCREntry {
     }
 
     private void resolveStatus() {
-        malformed = digitsRepresentation.contains(ApplicationStrings.MALFORMED_DIGIT_REPRESENTATION);
+        malformed = entryRepresentation.contains(ApplicationStrings.MALFORMED_DIGIT_REPRESENTATION);
         error = isChecksumInvalid(checksum);
 
         if (malformed) {
-            status = 1;
+            statusCode = 1;
         } else if (error) {
-            status = 2;
+            statusCode = 2;
         } else if (ambiguous) {
-            status = 3;
-        }
-        else {
-            status = 0;
+            statusCode = 3;
+        } else {
+            statusCode = 0;
         }
     }
 
@@ -127,39 +126,50 @@ public class OCREntry {
      * Gets the alternative representations for possibilities
      */
     private void createAlternativeRepresentations(Map<Integer, Digit> digitsWithAlternatives) {
-        String firstValidRepr = "";
-        List<Integer> firstValidIntegers = new ArrayList<>();
-        Checksum firstValidChecksum = null;
+        
+        // Store the first valids if the original is invalid
+        String firstValidSecondaryRepr = "";
+        List<Integer> firstValidSecondaryIntegers = new ArrayList<>();
+        Checksum firstValidSecondarChecksum = null;
 
         int alternativeValidChecksums = 0;
 
         for (Entry<Integer, Digit> e : digitsWithAlternatives.entrySet()) {
-
+            
+            // Index pointer to a spot in list of integers 
             Integer index = e.getKey();
+            // Digit has it's alternatives
             Digit d = e.getValue();
 
-            for (Integer alternative : d.getPossibleNumbers()) {
+            for (Integer alternativeInt : d.getPossibleNumbers()) {
 
-                List<Integer> alternativeIntegers = alternativeIntegerList(integers, index, alternative);
+                // Do alternative list of integers 
+                List<Integer> alternativeIntegers = OCREntryMethods.createSecondaryIntegerList(integers, index, alternativeInt);
                 Checksum altCheck = buildChecksum(alternativeIntegers);
+
+                // Create alternative reprensentation if alt checksum is valid
                 if (altCheck.isValid()) {
 
-                    String altRepr = alternativeRepresentation(d.getRepresentation(), alternative, index);
-                    alternativeRepresentations.add(altRepr);
+                    ambiguous = true;
+                    String secondaryRepr = OCREntryMethods.createSecondaryRepresentation(d.getRepresentation(), alternativeInt, index);
+                    secondaryalternativeEntryRepresentations.add(secondaryRepr);
 
-                    if (altCheck.isValid() && this.status > 0) {
+                    // if original is malformed or erroneous
+                    if (this.statusCode > 0) {
                         if (alternativeValidChecksums < 1) {
-                            firstValidChecksum = altCheck;
-                            firstValidIntegers = alternativeIntegers;
-                            firstValidRepr = altRepr;
+                            firstValidSecondarChecksum = altCheck;
+                            firstValidSecondaryIntegers = alternativeIntegers;
+                            firstValidSecondaryRepr = secondaryRepr;
                         }
+                        // If there are multiple valids we need to increment as it'll stay ambiguous
                         alternativeValidChecksums++;
                     }
-                    if (alternativeValidChecksums == 1 && this.status > 0 && firstValidChecksum.isValid()) {
-                        this.integers = firstValidIntegers;
-                        this.checksum = firstValidChecksum;
-                        this.digitsRepresentation = firstValidRepr;
-                        resolveStatus();
+                    // If there is only one valid alternative -> make it the entry
+                    if (alternativeValidChecksums == 1 && this.statusCode > 0 && firstValidSecondarChecksum.isValid()) {
+                        reinitializeAttributes(firstValidSecondaryIntegers, firstValidSecondarChecksum, firstValidSecondaryRepr);
+                        // It's not ambiguous anymore if there was only one alternative
+                        ambiguous = false;
+
                     }
                 }
             }
@@ -167,63 +177,23 @@ public class OCREntry {
 
     }
 
-    /**
-     * Creates alternative String representations
-     *
-     * @param alternative
-     * @return
-     */
-    private String alternativeRepresentation(String originalRepresentation, Integer alternative, Integer index) {
-        StringBuilder alternativeOcrStr = new StringBuilder(digitsRepresentation);
-        // Gets the String representation of Digits number
-        String repr = Digit.getRepresentationForInteger(alternative);
-        // Remove the old representation
-        alternativeOcrStr.delete(index, originalRepresentation.length() + index);
-        // Insert the new one
-        alternativeOcrStr.insert(index, repr);
-        // Add it to alternative representations
-        return alternativeOcrStr.toString();
-
+    private void reinitializeAttributes(List<Integer> integers, Checksum checksum, String representation) {
+        this.integers = integers;
+        this.checksum = checksum;
+        this.entryRepresentation = representation;
+        resolveStatus();
     }
 
-    /**
-     * Creates alternative list of integers
-     *
-     * @param integers
-     * @param index
-     * @param alternative
-     * @return
-     */
-    private List<Integer> alternativeIntegerList(List<Integer> integers, int index, Integer alternative) {
-        List<Integer> ints = new ArrayList<>();
-        for (int i : integers) {
-            ints.add(i);
-        }
-        ints.set(index, alternative);
-        return ints;
-    }
 
-    /**
-     * Swapper for ints
-     *
-     * @param integers
-     * @param pos
-     * @param newInt
-     * @return
-     */
-    public Integer swapInteger(List<Integer> integers, int pos, Integer newInt) {
-        // TODO just make a swapper utility class
-        Integer integer = integers.get(pos);
-        integers.set(pos, newInt);
-        return integer;
-    }
+
+
 
     public Checksum getChecksum() {
         return checksum;
     }
 
-    public String getDigitsRepresentation() {
-        return digitsRepresentation;
+    public String getEntryRepresentation() {
+        return entryRepresentation;
     }
 
     /**
@@ -232,7 +202,7 @@ public class OCREntry {
      * @return
      */
     public Status getStatus() {
-        return Status.values()[status];
+        return Status.values()[statusCode];
     }
 
     /**
@@ -247,6 +217,10 @@ public class OCREntry {
 
     public List<Integer> getIntegers() {
         return integers;
+    }
+
+    public List<String> getSecondaryalternativeEntryRepresentations() {
+        return secondaryalternativeEntryRepresentations;
     }
 
 }

@@ -23,50 +23,52 @@
  */
 package fi.johannes.kata.ocr.core;
 
-import fi.johannes.kata.ocr.core.data.ApplicationStrings;
+import fi.johannes.kata.ocr.digits.Digit;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  * @author Johannes Sarpola
- * @date Jul 1, 2016
+ * @date Jul 3, 2016
  */
-public class OCROutputBuilder {
+class OCREntryMethods {
 
     /**
-     * Builds output from a list of entries
-     * @param entries
-     * @return 
+     * Creates alternative String representations
+     *
+     * @param alternative
+     * @return
      */
-    public static List<String> buildOutput(List<OCREntry> entries) {
-        List<String> output = new ArrayList<>();
-        for (OCREntry entry : entries) {
-            String status = statusString(entry.getStatus());
-            String line = entry.getEntryRepresentation() + ApplicationStrings.FIELD_DELIMETER + status;
-            output.add(line);
-        }
-        return output;
-    }
-    /**
-     * Just switch-case for status to message
-     * @param status
-     * @return 
-     */
-    private static String statusString(OCREntry.Status status) {
-        if (null != status) {
-            switch (status) {
-                case OK:
-                    return ApplicationStrings.OutputBuilder.OK;
-                case Malformed:
-                    return ApplicationStrings.OutputBuilder.MALFORMED_DIGIT_FIELD;
-                case Invalid_Checksum:
-                    return ApplicationStrings.OutputBuilder.INVALID_CHECKSUM_FIELD;
-                case Ambiguous:
-                    return ApplicationStrings.OutputBuilder.AMBIGUOUS_ENTRY_FIELD;
-            }
-        }
-        return ApplicationStrings.OutputBuilder.INVALID_STATUS;
+    static String createSecondaryRepresentation(String originalRepresentation, Integer alternative, Integer index) {
+        StringBuilder alternativeOcrStr = new StringBuilder(originalRepresentation);
+        // Gets the String representation of Digits number
+        String repr = Digit.getRepresentationForInteger(alternative);
+        // Remove the old representation
+        alternativeOcrStr.delete(index, originalRepresentation.length() + index);
+        // Insert the new one
+        alternativeOcrStr.insert(index, repr);
+        // Add it to alternative representations
+        return alternativeOcrStr.toString();
 
     }
+
+    /**
+     * Creates alternative list of integers
+     *
+     * @param integers
+     * @param index
+     * @param alternative
+     * @return
+     */
+    static List<Integer> createSecondaryIntegerList(List<Integer> integers, int index, Integer alternative) {
+        List<Integer> ints = new ArrayList<>();
+        for (int i : integers) {
+            ints.add(i);
+        }
+        ints.set(index, alternative);
+        return ints;
+    }
+
+
 }

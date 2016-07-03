@@ -35,6 +35,13 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -95,12 +102,12 @@ public class OCREntryTest {
     public void testOCREntry() {
 
         OCREntry ocr = new OCREntry(cr);
-        assertEquals("345882865", ocr.getDigitsRepresentation());
+        assertEquals("345882865", ocr.getEntryRepresentation());
         assertEquals(Status.OK, ocr.getStatus());
         assertEquals(cells.size(), ocr.getIntegers().size());
 
         OCREntry ocr2Malform = new OCREntry(cr2);
-        assertEquals("000000051", ocr2Malform.getDigitsRepresentation());
+        assertEquals("000000051", ocr2Malform.getEntryRepresentation());
         assertEquals(Status.OK, ocr2Malform.getStatus());
         assertEquals(cells.size(), ocr2Malform.getIntegers().size());
 
