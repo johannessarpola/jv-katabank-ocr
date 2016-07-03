@@ -34,7 +34,7 @@ import static org.junit.Assert.assertTrue;
  * @author Johannes Sarpola
  */
 public class ResolversTest {
-    
+
     public ResolversTest() {
     }
     String zero = " _ " + "| |" + "|_|";
@@ -57,6 +57,7 @@ public class ResolversTest {
     String possibleSeven = "   " + "  |" + "  |";
     String possibleOne = "   " + "  |" + "   ";
     String noPossibilities = "   " + "   " + "   ";
+    String possibleOne2 = "    _|  |";
 
     @Test
     public void testResolver() {
@@ -91,9 +92,13 @@ public class ResolversTest {
         Cell pSeven = new Cell(possibleSeven);
         Cell pSix = new Cell(possibleSix);
         Cell pOne = new Cell(possibleOne);
+        Cell pOne2 = new Cell(possibleOne2);
+
         Cell nPos = new Cell(noPossibilities);
 
         List<Integer> pOnes = Resolvers.CellNumber.resolveNumberWithPossibilities(pOne);
+        List<Integer> pOnes2 = Resolvers.CellNumber.resolveNumberWithPossibilities(pOne2);
+
         List<Integer> pFives = Resolvers.CellNumber.resolveNumberWithPossibilities(pFive);
         List<Integer> pNines = Resolvers.CellNumber.resolveNumberWithPossibilities(pNine);
         List<Integer> pSevens = Resolvers.CellNumber.resolveNumberWithPossibilities(pSeven);
@@ -104,6 +109,10 @@ public class ResolversTest {
         assertEquals(2, pOnes.size());
         assertEquals(new Integer(1), pOnes.get(1));
 
+        // should be 1, 7 and -1
+        assertEquals(3, pOnes2.size());
+        assertTrue(pOnes2.contains(1));
+        
         assertEquals(3, pFives.size());
         assertTrue(pFives.contains(6));
         assertTrue(pFives.contains(9));
