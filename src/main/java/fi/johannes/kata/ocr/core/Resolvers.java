@@ -26,8 +26,6 @@ package fi.johannes.kata.ocr.core;
 import com.google.common.collect.ImmutableMap;
 import fi.johannes.kata.ocr.cells.Cell;
 import fi.johannes.kata.ocr.core.data.ApplicationData;
-import static fi.johannes.kata.ocr.core.data.ApplicationData.HORIZONTAL_BASE;
-import static fi.johannes.kata.ocr.core.data.ApplicationData.VERTICAL_BASE;
 import fi.johannes.kata.ocr.core.data.ApplicationProperties;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,8 +51,6 @@ public class Resolvers {
                 .put(ApplicationData.Digits.Eight(), 8)
                 .put(ApplicationData.Digits.Nine(), 9)
                 .put(ApplicationData.Digits.Zero(), 0).build();
-
-
 
         /**
          *
@@ -89,6 +85,7 @@ public class Resolvers {
             }
             return integers;
         }
+
         public static List<Integer> resolveNumberWithPossibilities(Cell cell) {
             List<Cell> permutations = resolvePermutations(cell);
             List<Integer> possibleNumbers = new ArrayList<>();
@@ -111,27 +108,15 @@ public class Resolvers {
             return permutations;
         }
 
-        private static List<Cell> permutate(Cell cell) {
-            int length = cell.toString().length();
+        private static List<Cell> permutate(Cell cellParam) {
+            int length = cellParam.toString().length();
             List<Cell> validPermutations = new ArrayList<>();
-            char original;
+            char originalChar;
             for (int i = 0; i < length; i++) {
                 try {
-                    // Deep copy of original
-                    Cell copyOfCell = cell.deepCopyOf();
-                    // Try with vertical base
-                    original = copyOfCell.swapChar(i, VERTICAL_BASE);
-                    cell = checkCell(cell, original, i);
-                    if (copyOfCell.doKeep() && !cell.equals(copyOfCell)) {
-                        validPermutations.add(copyOfCell);
-                    }
-
-                    copyOfCell = cell.deepCopyOf();
-                    // Try with horizontal
-                    original = copyOfCell.swapChar(i, HORIZONTAL_BASE);
-                    cell = checkCell(cell, original, i);
-                    if (copyOfCell.doKeep() && !cell.equals(copyOfCell)) {
-                        validPermutations.add(copyOfCell);
+                    // Deep copy of original to permutate
+                    for (char c : ApplicationData.CHAR_ALTERATIONS) {
+                        permutateCell(cellParam, validPermutations, c, i);
                     }
 
                 } catch (Exception e) {
@@ -142,8 +127,21 @@ public class Resolvers {
             return validPermutations;
         }
 
+        private static void permutateCell(Cell cellParam, List<Cell> validPermutations, char toBeSwapped, int position) {
+            char originalChar;
+            // Deep copy of original to permutate
+            Cell copyOfCell = cellParam.deepCopyOf();
+
+            // Try adding vertical base
+            originalChar = copyOfCell.swapChar(position, toBeSwapped);
+            copyOfCell = checkCell(copyOfCell, originalChar, position);
+            if (copyOfCell.doKeep() && !cellParam.equals(copyOfCell)) {
+                validPermutations.add(copyOfCell);
+            }
+        }
+
         /**
-         * Checks the cell is it resolvable
+         * Checks if the cell is resolvable
          *
          * @param cell
          * @param original
@@ -162,10 +160,15 @@ public class Resolvers {
             }
             return cell;
         }
+
         public static boolean isInvalidNumber(Integer integer) {
-            if(integer.equals(ApplicationProperties.Cells.INVALID_NUMBER)) return true;
-            else return false;
+            if (integer.equals(ApplicationProperties.Cells.INVALID_NUMBER)) {
+                return true;
+            } else {
+                return false;
+            }
         }
+
         /**
          * Gets the numerical value of invalid Number
          *
