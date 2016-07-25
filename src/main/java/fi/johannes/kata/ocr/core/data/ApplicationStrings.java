@@ -65,7 +65,13 @@ public class ApplicationStrings {
 
         public static class Info {
 
+            public static final String INPUT_PATH_IS = "Input path to is: ";
+            public static final String OUTPUT_PATH_IS = "Output path to is: ";
+            public static final String CURRENT_PATH_IS = "Currently reading: ";
             public static final String FOLDER_CONNECTION_SUCCESSFUL = "Connection to Folder done";
+            public static final String INPUT_FILES_ĆONNECTION_SUCCESS = "Connection to input files established";
+            public static final String SIZE_IS = "size is: ";
+            
         }
 
         public static class Error {

@@ -25,6 +25,8 @@ package fi.johannes.kata.ocr.core;
 
 import fi.johannes.kata.ocr.cells.CellRows;
 import fi.johannes.kata.ocr.core.data.ApplicationProperties;
+import fi.johannes.kata.ocr.core.data.ApplicationStrings;
+import fi.johannes.kata.ocr.utils.AppLogging;
 import fi.johannes.kata.ocr.utils.ResourceGetter;
 import fi.johannes.kata.ocr.utils.files.ExistingFileConnection;
 import fi.johannes.kata.ocr.utils.structs.Filename;
@@ -36,8 +38,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -57,6 +57,9 @@ public class OCR {
     }
 
     public OCR(Path input, Path output) throws IOException {
+        AppLogging.logMessage_Info(this.getClass(), ApplicationStrings.LoggingMessages.Info.INPUT_PATH_IS + input.toAbsolutePath().toString());
+        AppLogging.logMessage_Info(this.getClass(), ApplicationStrings.LoggingMessages.Info.OUTPUT_PATH_IS + output.toAbsolutePath().toString());
+
         this.input = input;
         this.output = output;
         init();
@@ -73,24 +76,25 @@ public class OCR {
             input = ResourceGetter.getPath("ocr/");
             output = Paths.get("./result");
         } catch (URISyntaxException ex) {
-            Logger.getLogger(OCR.class.getName()).log(Level.SEVERE, null, ex);
+            AppLogging.logStackTrace_Error(this.getClass(), ex);
         }
     }
 
     public void run() throws FileNotFoundException, IOException {
-        
+
         Iterator<Path> pathIter = ioManager.iterator();
         ioManager.createOutputFolder();
-        
+
         IntegerPair cellSize = new IntegerPair(ApplicationProperties.Cells.CELL_WIDTH, ApplicationProperties.Cells.CELL_HEIGHT);
         Integer cellsOnRow = ApplicationProperties.Cells.CELLS_ON_ROW;
         CellRows crs;
         List<OCREntry> entries;
         List<String> entriesStr;
         Filename source;
-        
+
         while (pathIter.hasNext()) {
             Path p = pathIter.next();
+            AppLogging.logMessage_Info(this.getClass(), ApplicationStrings.LoggingMessages.Info.CURRENT_PATH_IS+p.toString());
             source = new Filename(p);
             crs = createCellRows(p, cellSize, cellsOnRow);
             entries = OCREntryBuilder.buildEntries(crs);
@@ -99,12 +103,14 @@ public class OCR {
         }
 
     }
-    public void clearPreviousOutputs(){
+
+    public void clearPreviousOutputs() {
         ioManager.clearOutputfolder();
-        
+
     }
+
     private CellRows createCellRows(Path p, IntegerPair cellSize, Integer cellsOnRow) throws FileNotFoundException, IOException {
         ExistingFileConnection efc = new ExistingFileConnection(p);
-        return new CellRows(cellSize,cellsOnRow,efc);
+        return new CellRows(cellSize, cellsOnRow, efc);
     }
 }

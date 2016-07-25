@@ -24,7 +24,7 @@
 package fi.johannes.kata.ocr.core;
 
 import fi.johannes.kata.ocr.core.data.ApplicationStrings;
-import fi.johannes.kata.ocr.utils.Logging;
+import fi.johannes.kata.ocr.utils.AppLogging;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -41,12 +41,12 @@ public class Main {
         OCR main = null;
         if (args.length > 0) {
             if (args.length == 2) {
-                Path input = Paths.get(args[0]);
-                Path output = Paths.get(args[1]);
+                Path input = Paths.get(args[0]).toAbsolutePath();
+                Path output = Paths.get(args[1]).toAbsolutePath();
                 try {
                     main = new OCR(input, output);
                 } catch (Exception e) {
-                    Logging.logMessageWithExpection_Fatal(Main.class, ApplicationStrings.LoggingMessages.Error.PROBLEM_AT_STARTUP, e);
+                    AppLogging.logMessageWithExpection_Fatal(Main.class, ApplicationStrings.LoggingMessages.Error.PROBLEM_AT_STARTUP, e);
                 }
                 main.run();
             }

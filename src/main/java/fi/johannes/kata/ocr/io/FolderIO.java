@@ -24,7 +24,7 @@
 package fi.johannes.kata.ocr.io;
 
 import fi.johannes.kata.ocr.core.data.ApplicationStrings;
-import fi.johannes.kata.ocr.utils.Logging;
+import fi.johannes.kata.ocr.utils.AppLogging;
 import fi.johannes.kata.ocr.utils.files.CFolderOperations;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -49,12 +49,12 @@ abstract class FolderIO {
     public void connectToFolder(Path folder) throws NotDirectoryException {
         this.folder = folder;
         if (!Files.isDirectory(folder)) {
-            Logging.logMessageWithExpection_Fatal(this.getClass(), ApplicationStrings.LoggingMessages.Error.FOLDER_CONNECTION_UNSUCCESSFUL, new NotDirectoryException(folder.toString()));
+            AppLogging.logMessageWithExpection_Fatal(this.getClass(), ApplicationStrings.LoggingMessages.Error.FOLDER_CONNECTION_UNSUCCESSFUL, new NotDirectoryException(folder.toString()));
             throw new NotDirectoryException(folder.toString());
         } else if (!Files.exists(folder)) {
             CFolderOperations.createFolder(folder.toString());
         } else {
-            Logging.logMessage_Info(this.getClass(), ApplicationStrings.LoggingMessages.Info.FOLDER_CONNECTION_SUCCESSFUL);
+            AppLogging.logMessage_Info(this.getClass(), ApplicationStrings.LoggingMessages.Info.FOLDER_CONNECTION_SUCCESSFUL);
         }
     }
 
