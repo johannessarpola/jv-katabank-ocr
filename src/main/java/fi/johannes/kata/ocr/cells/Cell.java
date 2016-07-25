@@ -24,7 +24,7 @@
 package fi.johannes.kata.ocr.cells;
 
 import fi.johannes.kata.ocr.core.data.ApplicationStrings;
-import fi.johannes.kata.ocr.utils.Logging;
+import fi.johannes.kata.ocr.utils.AppLogging;
 import java.util.List;
 import java.util.Objects;
 import org.apache.commons.lang3.ArrayUtils;
@@ -83,7 +83,7 @@ public class Cell {
         }
         catch(Exception e) {
             ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException = new ArrayIndexOutOfBoundsException();
-            Logging.logMessageWithExpection_Error(this.getClass(), ApplicationStrings.LoggingMessages.Error.CELL_SWAP_AT_INVALID_INDEX, arrayIndexOutOfBoundsException);
+            AppLogging.logMessageWithExpection_Error(this.getClass(), ApplicationStrings.LoggingMessages.Error.CELL_SWAP_AT_INVALID_INDEX, arrayIndexOutOfBoundsException);
             throw arrayIndexOutOfBoundsException;
         }
     }
