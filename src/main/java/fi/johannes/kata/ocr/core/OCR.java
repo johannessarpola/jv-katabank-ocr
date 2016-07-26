@@ -87,9 +87,6 @@ public class OCR {
 
         IntegerPair cellSize = new IntegerPair(ApplicationProperties.Cells.CELL_WIDTH, ApplicationProperties.Cells.CELL_HEIGHT);
         Integer cellsOnRow = ApplicationProperties.Cells.CELLS_ON_ROW;
-        CellRows crs;
-        List<OCREntry> entries;
-        List<String> entriesStr;
         Filename source;
 
         while (pathIter.hasNext()) {
@@ -101,7 +98,7 @@ public class OCR {
             
             // The main operations are here 
             List<String> lines = readCellRowsLines(p, cellSize, cellsOnRow);
-            crs = CellRows.Builder.build(cellSize, cellsOnRow, lines);
+            CellRows crs = CellRows.Builder.build(cellSize, cellsOnRow, lines);
             OCREntries ocrEntries = OCREntries.Builder.build(crs);
             OCREntriesOutput output = OCREntriesOutput.Builder.build(ocrEntries);
             
