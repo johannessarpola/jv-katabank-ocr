@@ -111,6 +111,7 @@ public class OCR {
 
     private CellRows createCellRows(Path p, IntegerPair cellSize, Integer cellsOnRow) throws FileNotFoundException, IOException {
         ExistingFileConnection efc = new ExistingFileConnection(p);
-        return new CellRows(cellSize, cellsOnRow, efc);
+        List<String> lines = efc.readLines();
+        return new CellRows(cellSize, cellsOnRow, lines);
     }
 }

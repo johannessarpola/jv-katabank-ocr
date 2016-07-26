@@ -41,24 +41,21 @@ public class CellRows implements Iterable<CellRow> {
     private Integer height;
     private Integer width;
     private Integer numbersOnRow;
-    private ExistingFileConnection connection;
 
-    public CellRows(IntegerPair pair, Integer numbersOnRow, ExistingFileConnection connection) throws IOException {
-        init(pair, numbersOnRow, connection);
-        buildRows();
+    public CellRows(IntegerPair pair, Integer numbersOnRow, List<String> lines) throws IOException {
+        init(pair, numbersOnRow);
+        buildRows(lines);
     }
 
-    private void init(IntegerPair pair, Integer numbersOnRow, ExistingFileConnection connection) {
+    private void init(IntegerPair pair, Integer numbersOnRow) {
         this.width = pair.getX();
         this.height = pair.getY();
         this.numbersOnRow = numbersOnRow;
-        this.connection = connection;
         cellRows = new ArrayList<>();
 
     }
 
-    private void buildRows() throws IOException {
-        List<String> lines = connection.readLines();
+    private void buildRows(List<String> lines) throws IOException {
         RowBundles<String> bundles = new RowBundles<>(lines, height);
         Iterator<RowBundle<String>> iterator = bundles.iterator();
         while (iterator.hasNext()) {
