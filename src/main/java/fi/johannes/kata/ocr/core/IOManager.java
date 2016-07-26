@@ -26,6 +26,7 @@ package fi.johannes.kata.ocr.core;
 import fi.johannes.kata.ocr.core.data.ApplicationStrings;
 import fi.johannes.kata.ocr.io.InputFolderReader;
 import fi.johannes.kata.ocr.io.OutputFolderWriter;
+import fi.johannes.kata.ocr.utils.AppLogging;
 import fi.johannes.kata.ocr.utils.TimeUtils;
 import fi.johannes.kata.ocr.utils.structs.Filename;
 import java.io.IOException;
@@ -52,19 +53,24 @@ public class IOManager implements Iterable<Path> {
 
     public void connectToInputFiles() throws IOException {
         inputFiles = input.getFiles();
+        AppLogging.logMessage_Info(this.getClass(), ApplicationStrings.LoggingMessages.Info.INPUT_FILES_ĆONNECTION_SUCCESS);
+        AppLogging.logMessage_Info(this.getClass(), ApplicationStrings.LoggingMessages.Info.SIZE_IS + inputFiles.size());
+
     }
 
     public void createOutputFolder() throws IOException {
         output.create();
     }
-    public void clearOutputfolder(){
+
+    public void clearOutputfolder() {
         output.clear();
     }
-    public void writeToFile(Filename source, List<String> lines) throws IOException{
+
+    public void writeToFile(Filename source, List<String> lines) throws IOException {
         String file = createNameForOutput(source);
         output.write(lines, file);
     }
-    
+
     @Override
     public Iterator<Path> iterator() {
         IOManager instance = this;

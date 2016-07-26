@@ -23,7 +23,7 @@
  */
 package fi.johannes.kata.ocr.utils.files;
 
-import fi.johannes.kata.ocr.utils.Logging;
+import fi.johannes.kata.ocr.utils.AppLogging;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -118,7 +118,7 @@ public class CFolderOperations {
                     List<String> lines = CFileOperations.getFileContentAsStrings(filePath);
                     l.add(lines);
                 } catch (IOException ex) {
-                    Logging.logStackTrace_Error(CFolderOperations.class, ex);
+                    AppLogging.logStackTrace_Error(CFolderOperations.class, ex);
                 }
             }
         });
