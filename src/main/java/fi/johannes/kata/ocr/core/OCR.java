@@ -46,7 +46,7 @@ import java.util.List;
  */
 public class OCR {
 
-    IOManager ioManager;
+    IOFolderManager ioManager;
     Path input;
     Path output;
 
@@ -66,7 +66,7 @@ public class OCR {
     }
 
     private void init() throws IOException {
-        ioManager = new IOManager(input, output);
+        ioManager = new IOFolderManager(input, output);
         ioManager.connectToInputFiles();
 
     }
