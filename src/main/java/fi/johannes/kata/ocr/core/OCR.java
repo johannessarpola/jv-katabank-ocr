@@ -100,9 +100,10 @@ public class OCR {
             source = new Filename(p);
             
             // The main operations are here 
-            crs = createCellRows(p, cellSize, cellsOnRow);
-            entries = OCREntryBuilder.buildEntries(crs);
-            entriesStr = OCROutputBuilder.buildOutput(entries);
+            List<String> lines = readCellRowsLines(p, cellSize, cellsOnRow);
+            crs = CellRows.Builder.build(cellSize, cellsOnRow, lines);
+            entries = OCREntriesBuilder.buildEntries(crs);
+            entriesStr = OCREntriesOutputBuilder.buildOutput(entries);
             
             // outputs to a file
             ioManager.writeToFile(source, entriesStr);
@@ -115,9 +116,8 @@ public class OCR {
 
     }
 
-    private CellRows createCellRows(Path p, IntegerPair cellSize, Integer cellsOnRow) throws FileNotFoundException, IOException {
+    private List<String> readCellRowsLines(Path p, IntegerPair cellSize, Integer cellsOnRow) throws FileNotFoundException, IOException {
         ExistingFileConnection efc = new ExistingFileConnection(p);
-        List<String> lines = efc.readLines();
-        return new CellRows(cellSize, cellsOnRow, lines);
+        return efc.readLines();
     }
 }

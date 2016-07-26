@@ -24,7 +24,6 @@
 package fi.johannes.kata.ocr.cells;
 
 import fi.johannes.kata.ocr.utils.structs.IntegerPair;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -41,7 +40,7 @@ public class CellRows implements Iterable<CellRow> {
     private Integer width;
     private Integer numbersOnRow;
 
-    public CellRows(IntegerPair pair, Integer numbersOnRow, List<String> lines) throws IOException {
+    public CellRows(IntegerPair pair, Integer numbersOnRow, List<String> lines) {
         init(pair, numbersOnRow);
         buildRows(lines);
     }
@@ -54,7 +53,7 @@ public class CellRows implements Iterable<CellRow> {
 
     }
 
-    private void buildRows(List<String> lines) throws IOException {
+    private void buildRows(List<String> lines) {
         RowBundles<String> bundles = new RowBundles<>(lines, height);
         Iterator<RowBundle<String>> iterator = bundles.iterator();
         while (iterator.hasNext()) {
@@ -86,5 +85,13 @@ public class CellRows implements Iterable<CellRow> {
             }
         };
         return it;
+    }
+    public static class Builder {
+        public static CellRows build(IntegerPair pair, Integer numbersOnRow, List<String> lines) {
+            return new CellRows(pair, numbersOnRow, lines);
+        }
+        public static CellRows build(Integer x, Integer y, Integer numbersOnRow, List<String> lines) {
+            return new CellRows(new IntegerPair(x,y), numbersOnRow, lines);
+        }
     }
 }

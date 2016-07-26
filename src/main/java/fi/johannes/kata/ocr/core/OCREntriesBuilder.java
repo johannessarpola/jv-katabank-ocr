@@ -35,7 +35,7 @@ import java.util.List;
  * @author Johannes Sarpola
  * @date Jul 1, 2016
  */
-public class OCREntryBuilder {
+public class OCREntriesBuilder {
     /**
      * Creates the OCREntries from CellRows
      * @param cellRows

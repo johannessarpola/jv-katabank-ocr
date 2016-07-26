@@ -32,7 +32,7 @@ import java.util.List;
  * @author Johannes Sarpola
  * @date Jul 1, 2016
  */
-public class OCROutputBuilder {
+public class OCREntriesOutputBuilder {
 
     /**
      * Builds output from a list of entries
