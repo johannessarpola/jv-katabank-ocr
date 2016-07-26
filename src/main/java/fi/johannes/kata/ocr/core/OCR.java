@@ -93,12 +93,18 @@ public class OCR {
         Filename source;
 
         while (pathIter.hasNext()) {
+            
+            // resolves the input folder paths
             Path p = pathIter.next();
             AppLogging.logMessage_Info(this.getClass(), ApplicationStrings.LoggingMessages.Info.CURRENT_PATH_IS+p.toString());
             source = new Filename(p);
+            
+            // The main operations are here 
             crs = createCellRows(p, cellSize, cellsOnRow);
             entries = OCREntryBuilder.buildEntries(crs);
             entriesStr = OCROutputBuilder.buildOutput(entries);
+            
+            // outputs to a file
             ioManager.writeToFile(source, entriesStr);
         }
 
