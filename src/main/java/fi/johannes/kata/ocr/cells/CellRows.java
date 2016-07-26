@@ -40,7 +40,7 @@ public class CellRows implements Iterable<CellRow> {
     private Integer width;
     private Integer numbersOnRow;
 
-    public CellRows(IntegerPair pair, Integer numbersOnRow, List<String> lines) {
+    CellRows(IntegerPair pair, Integer numbersOnRow, List<String> lines) {
         init(pair, numbersOnRow);
         buildRows(lines);
     }
