@@ -21,7 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package fi.johannes.kata.ocr.core;
 
 import fi.johannes.kata.ocr.cells.CellRow;
@@ -35,20 +34,38 @@ import java.util.List;
  * @author Johannes Sarpola
  * @date Jul 1, 2016
  */
-public class OCREntriesBuilder {
-    /**
-     * Creates the OCREntries from CellRows
-     * @param cellRows
-     * @return 
-     */
-    public static List<OCREntry> buildEntries(CellRows cellRows){
-        List<OCREntry> entries = new ArrayList<>();
-        Iterator<CellRow> iterator = cellRows.iterator();
-        while(iterator.hasNext()) {
-            CellRow cr = iterator.next();
-            OCREntry entry = new OCREntry(cr);
-            entries.add(entry);
-        }
+public class OCREntries {
+
+    List<OCREntry> entries;
+
+    OCREntries(List<OCREntry> entries) {
+        this.entries = entries;
+    }
+
+    public List<OCREntry> getEntries() {
         return entries;
     }
+    
+
+    public static class Builder {
+
+        /**
+         * Creates the OCREntries from CellRows
+         *
+         * @param cellRows
+         * @return
+         */
+        public static OCREntries build(CellRows cellRows) {
+            List<OCREntry> entries = new ArrayList<>();
+            Iterator<CellRow> iterator = cellRows.iterator();
+            while (iterator.hasNext()) {
+                CellRow cr = iterator.next();
+                OCREntry entry = new OCREntry(cr);
+                entries.add(entry);
+            }
+            OCREntries ocrentries = new OCREntries(entries);
+            return ocrentries;
+        }
+    }
+
 }
