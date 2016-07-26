@@ -103,7 +103,7 @@ public class OCR {
             List<String> lines = readCellRowsLines(p, cellSize, cellsOnRow);
             crs = CellRows.Builder.build(cellSize, cellsOnRow, lines);
             OCREntries ocrEntries = OCREntries.Builder.build(crs);
-            OCREntriesOutput output = OCREntriesOutput.Builder.buildOutput(ocrEntries);
+            OCREntriesOutput output = OCREntriesOutput.Builder.build(ocrEntries);
             
             // outputs to a file
             ioManager.writeToFile(source, output.getOutputList());

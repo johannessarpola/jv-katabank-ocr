@@ -51,7 +51,7 @@ public class OCREntriesOutput {
          * @param ocrentries
          * @return
          */
-        public static OCREntriesOutput buildOutput(OCREntries ocrentries) {
+        public static OCREntriesOutput build(OCREntries ocrentries) {
             List<OCREntry> entries = ocrentries.getEntries();
             List<String> output = new ArrayList<>();
             for (OCREntry entry : entries) {
