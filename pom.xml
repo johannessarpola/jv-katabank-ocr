@@ -69,6 +69,8 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>3.0.2</version>
+
                 <configuration>
                     <archive>
                         <manifest>
@@ -79,6 +81,10 @@
                     </archive>
                 </configuration>
             </plugin>
+            <!--checkstyle plug-in. checking against googles styles
+            see config at checkstyle.xml-->
+            
         </plugins>
     </build>
+
 </project>
