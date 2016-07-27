@@ -45,7 +45,7 @@ and date it was run on.
 To run it, you input following, in which first is the input folder and second output:
 
 ```
-java -jar kata-ocr-1.0.jar ocr output
+java -jar kata-ocr-1.01.jar ocr output
 
 ```
 
