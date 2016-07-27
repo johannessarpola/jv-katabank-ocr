@@ -1,5 +1,3 @@
-# Notice that you're in the Webapi branch which is still a heavily WIP
-
 # KataBankOCR 
 
 >Johannes Sarpola, johannes.sarpola(a)gmail.com
