@@ -5,7 +5,7 @@
 >License: MIT
 
 
-## What does it do
+## 1 What does it do
 
 - [Task](http://codingdojo.org/cgi-bin/index.pl?KataBankOCR)
 - It reads from 'OCR' output 'account numbers' according to the task.
@@ -16,7 +16,7 @@
   and they should be handled as well
 - Validity for each account is checked with a checksum which is defined in the Task
 
-## How was the task solved
+## 2 How was the task solved
 
 - Used language: Java
 - Used libraries: Google Guava, Apache Commons, JodaTime, Log4j and Junit
@@ -27,7 +27,7 @@
 - Git was used for revision control and Bitbucket for storage
 - Everything from documentation to source code is written in English like I always do
 
-## How to run
+## 3 How to run
 
 Jar can be found in the 'kata-ocr_with-test-cases.zip' which has the jar
 and ocr test cases from the codingdojo webpage.
@@ -47,7 +47,7 @@ displayed in the format given in the task.
 
 
 
-## Quick rundown on package and class structure
+## 4 Quick rundown on package and class structure
 
 Here is the short explanations for the packaged found in the source code.
 
@@ -103,7 +103,7 @@ Here is the short explanations for the packaged found in the source code.
 - Has models for different kinds of data.
 
 
-## Thoughts
+## 5 Thoughts
 
 - Task was quite interesting and I got to learn something new, which is always nice. 
 - It was probably on the harder spectrum of tasks from the website, but can't really evaluate this since I didn't do other tasks. Yet at least.
@@ -112,7 +112,7 @@ the fictional reader had made a mistake. The resolving is quite intensive proces
 - There are good number of tests in the program, as I prefer to work TDD. Mostly because that way I can be sure something works as it's designed. Could probably have cut about 25 % of time spent without much of testing.
 
 
-## Missing features
+## 6 Missing features
 
 - There's no UI to speak of and it's usable from command line with 2 arguments
 - There are probably bugs, even though there are test cases for about half the classes
