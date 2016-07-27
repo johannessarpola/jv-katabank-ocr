@@ -61,28 +61,33 @@ Here is the short explanations for the packaged found in the source code.
 
 **fi.johannes.kata.ocr.cells**
 
-- has the classes dealing with 'cells' as each 'digit' is basically a 3 x 3 character array
-- as each file is read with line by line basis they need to be bundled into RowBundles
-- Hierarhies are as follows Cell->CellRow->CellRows and RowBundle->RowBundles
+- Package has the classes dealing with 'cells' as each 'digit' is basically a 3 x 3 character array
+- Each  of the files is read with line by line basis they need to be bundled into RowBundles
+- Hierarchies are as follows Cell->CellRow->CellRows and RowBundle->RowBundles
+- Cells can be thought of as part of the input rows with limits defined in the ApplicationProperties.java
+- RowBundle is used in constructing a set of cells as you need, in this case, 3 rows to create a single row of cells. 
 
 **fi.johannes.kata.ocr.checksum**
 
-- is where the checksums are calculated for a integer list as was defined in the task
+- Checksum.java is a class which calculated itself and resolves is it valid. 
 
 **fi.johannes.kata.ocr.core**
 
-- has the high-level classes
-- ocrentry is the basic unit which means a single row of digits from input file
-- there are builders for a ocrentry and it's output as well
-- resolvers class has the resolving part in which each digit is translated to a number
-  and possible alternatives
-- Builders operate on lists of entries so minimize the boiler needed in the main
+- has the high-level classes and the runnables. 
+- OCR.java is the main program which is launched from Main.java
+- OCREntries.java and OCREntriesOutput.java are the high level classes. First operates on multiple entries and other their output in string format. Both use the Builder pattern.
+- OCRDigitResolver.java is the class used in identifying a string digit and it's alternatives as defined in the task
 
-**fi.johannes.kata.ocr.data**
+**fi.johannes.kata.ocr.entry**
+- OCREntry.java is the upper plane unit which means a single row of digits from input file e.g. 123415
+- OCREntryMethods.java is the class which has static methods for OCREntry.java, package scoped.
 
-- has the classes with static data for the whole application like strings and other
-  properties
-- allows a centralized management of all the specific details
+**fi.johannes.kata.ocr.core.data**
+
+- Has the properties and strings hard coded to allow for a centralized configuration. 
+- ApplicationData.java has dictionary definitions for OCR and their building blocks.
+- ApplicationProperties.java has general properties like dimension limits and such. 
+- ApplicationStrings.java has all the strings used in the app like logging messages and such.
 
 **fi.johannes.kata.ocr.digit**
 
@@ -91,35 +96,27 @@ Here is the short explanations for the packaged found in the source code.
 
 **fi.johannes.kata.ocr.io**
 
-- has the classes dealing wih input and output for the ocr which in this case means reading from
-  disk and to it
+- FolderIO.java is the parent class which is used as IO surrounding folders.
+- InputFolderReader.java is a child of FolderIO which relates to files from a defined folder.
+- OutputFolderWriter.java is a child of FolderIO which relates to writing output to a defined folder.
 
 **fi.johannes.kata.ocr.utils**
 
-- has general classes for different utilties like logging, operating system detection and such
-- some of the classes are from other project so there might be somewhat different from other classes
+- Has general utilities which are used here and there in the application.
+- AppLogging.java is the class which handles the logging app-wide by static method invocations.
 
 **fi.johannes.kata.ocr.utils.structs**
 
-- has some basic structures to marshal data
+- Has models for different kinds of data.
 
 
-## Thought process on some of the classes
+## Thoughts
 
-- I generally work by clear separation from functionality and objects. This results in
-  classes like Digit and DigitMethods. DigitMethods are static operations for Digit obj.
-  - [Obj]Methods are generally only accessed from the relating object (e.g Digit) where
-  as other classes mostly operate only Digit.  
-- I try to reduce the classes to their atomic levels and thus there might be quite deep hierarchies
-  like there is three step hierarchy of Cell-CellRow-CellRows
-- Some of the 'data' in the application could be as well written in xml's or such files but for the
-  scope it was just as to use classes to store this. (kata.ocr.data)
-- Pretty much everything is boxed to 'higher' objects and it was a choice I made since there
-  were going to be so many lists and I prefer to keep applications consistent.
-  - It'll require more memory to run and Java is quite keen in hogging memory with these objects,
-    so I'd probably rely more on primitives in a more demanding application.
-- There was quite heavy TDD in this projects as I prefer to be sure that a class I made works like
-  it was planned to. Still with the given timeframe an scope some aspects were left untested.
+- Task was quite interesting and I got to learn something new, which is always nice. 
+- It was probably on the harder spectrum of tasks from the website, but can't really evaluate this since I didn't do other tasks. Yet at least.
+- In the end it was not that difficult, only required more than expected thought. Hardest part was probably the alternative digit rows, in the case
+the fictional reader had made a mistake. The resolving is quite intensive process currently computationally, but not too much, you could improve by just creating cache of these permutations and use set to store them, but it was fancier this way and less typing.
+- There are good number of tests in the program, as I prefer to work TDD. Mostly because that way I can be sure something works as it's designed. Could probably have cut about 25 % of time spent without much of testing.
 
 I'll be happy to answer more quetions relating to the implementation part if there are more.
 
