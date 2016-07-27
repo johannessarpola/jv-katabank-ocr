@@ -18,11 +18,12 @@
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARETHE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
  */
 package fi.johannes.kata.ocr.core;
 
+import fi.johannes.kata.ocr.entry.OCREntry;
 import fi.johannes.kata.ocr.core.data.ApplicationStrings;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +49,7 @@ public class OCREntriesOutput {
 
         /**
          * Builds output from a list of entries
+         *
          * @param ocrentries
          * @return
          */

@@ -1,25 +1,22 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2016 Johannes Sarpola.
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package fi.johannes.kata.ocr.core;
 
@@ -46,75 +43,81 @@ import java.util.List;
  */
 public class OCR {
 
-    IOFolderManager ioManager;
-    Path input;
-    Path output;
+  IOFolderManager ioManager;
+  Path input;
+  Path output;
 
-    public OCR() throws IOException {
-        defaultPaths();
-        init();
+  public OCR() throws IOException {
+    defaultPaths();
+    init();
 
+  }
+
+  public OCR(Path input, Path output) throws IOException {
+    AppLogging.logMessage_Info(this.getClass(),
+        ApplicationStrings.LoggingMessages.Info.INPUT_PATH_IS + input.toAbsolutePath().toString());
+    AppLogging.logMessage_Info(this.getClass(),
+        ApplicationStrings.LoggingMessages.Info.OUTPUT_PATH_IS
+            + output.toAbsolutePath().toString());
+
+    this.input = input;
+    this.output = output;
+    init();
+  }
+
+  private void init() throws IOException {
+    ioManager = new IOFolderManager(input, output);
+    ioManager.connectToInputFiles();
+
+  }
+
+  private void defaultPaths() {
+    try {
+      input = ResourceGetter.getPath("ocr/");
+      output = Paths.get("./result");
+    } catch (URISyntaxException ex) {
+      AppLogging.logStackTrace_Error(this.getClass(), ex);
+    }
+  }
+
+  public void run() throws FileNotFoundException, IOException {
+
+    Iterator<Path> pathIter = ioManager.iterator();
+    ioManager.createOutputFolder();
+
+    IntegerPair cellSize = new IntegerPair(ApplicationProperties.Cells.CELL_WIDTH,
+        ApplicationProperties.Cells.CELL_HEIGHT);
+    Integer cellsOnRow = ApplicationProperties.Cells.CELLS_ON_ROW;
+    Filename source;
+
+    while (pathIter.hasNext()) {
+
+      // resolves the input folder paths
+      Path p = pathIter.next();
+      AppLogging.logMessage_Info(this.getClass(),
+          ApplicationStrings.LoggingMessages.Info.CURRENT_PATH_IS + p.toString());
+      source = new Filename(p);
+
+      // The main operations are here
+      List<String> lines = readCellRowsLines(p, cellSize, cellsOnRow);
+      CellRows crs = CellRows.Builder.build(cellSize, cellsOnRow, lines);
+      OCREntries ocrEntries = OCREntries.Builder.build(crs);
+      OCREntriesOutput output = OCREntriesOutput.Builder.build(ocrEntries);
+
+      // outputs to a file
+      ioManager.writeToFile(source, output.getOutputList());
     }
 
-    public OCR(Path input, Path output) throws IOException {
-        AppLogging.logMessage_Info(this.getClass(), ApplicationStrings.LoggingMessages.Info.INPUT_PATH_IS + input.toAbsolutePath().toString());
-        AppLogging.logMessage_Info(this.getClass(), ApplicationStrings.LoggingMessages.Info.OUTPUT_PATH_IS + output.toAbsolutePath().toString());
+  }
 
-        this.input = input;
-        this.output = output;
-        init();
-    }
+  public void clearPreviousOutputs() {
+    ioManager.clearOutputfolder();
 
-    private void init() throws IOException {
-        ioManager = new IOFolderManager(input, output);
-        ioManager.connectToInputFiles();
+  }
 
-    }
-
-    private void defaultPaths() {
-        try {
-            input = ResourceGetter.getPath("ocr/");
-            output = Paths.get("./result");
-        } catch (URISyntaxException ex) {
-            AppLogging.logStackTrace_Error(this.getClass(), ex);
-        }
-    }
-
-    public void run() throws FileNotFoundException, IOException {
-
-        Iterator<Path> pathIter = ioManager.iterator();
-        ioManager.createOutputFolder();
-
-        IntegerPair cellSize = new IntegerPair(ApplicationProperties.Cells.CELL_WIDTH, ApplicationProperties.Cells.CELL_HEIGHT);
-        Integer cellsOnRow = ApplicationProperties.Cells.CELLS_ON_ROW;
-        Filename source;
-
-        while (pathIter.hasNext()) {
-            
-            // resolves the input folder paths
-            Path p = pathIter.next();
-            AppLogging.logMessage_Info(this.getClass(), ApplicationStrings.LoggingMessages.Info.CURRENT_PATH_IS+p.toString());
-            source = new Filename(p);
-            
-            // The main operations are here 
-            List<String> lines = readCellRowsLines(p, cellSize, cellsOnRow);
-            CellRows crs = CellRows.Builder.build(cellSize, cellsOnRow, lines);
-            OCREntries ocrEntries = OCREntries.Builder.build(crs);
-            OCREntriesOutput output = OCREntriesOutput.Builder.build(ocrEntries);
-            
-            // outputs to a file
-            ioManager.writeToFile(source, output.getOutputList());
-        }
-
-    }
-
-    public void clearPreviousOutputs() {
-        ioManager.clearOutputfolder();
-
-    }
-
-    private List<String> readCellRowsLines(Path p, IntegerPair cellSize, Integer cellsOnRow) throws FileNotFoundException, IOException {
-        ExistingFileConnection efc = new ExistingFileConnection(p);
-        return efc.readLines();
-    }
+  private List<String> readCellRowsLines(Path p, IntegerPair cellSize, Integer cellsOnRow)
+      throws FileNotFoundException, IOException {
+    ExistingFileConnection efc = new ExistingFileConnection(p);
+    return efc.readLines();
+  }
 }
