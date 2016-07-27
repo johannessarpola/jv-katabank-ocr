@@ -27,13 +27,6 @@
 - Git was used for revision control and Bitbucket for storage
 - Everything from documentation to source code is written in English like I always do
 
-## Missing features
-
-- There's no UI to speak of and it's usable from command line with 2 arguments
-- There are probably bugs, even though there are test cases for about half the classes
-- It's not very user friendly and lacks much of the feedback or expection handling
-- Testing on different platforms is very lacking, only tested with Windows 10 running Java 8
-
 ## How to run
 
 Jar can be found in the 'kata-ocr_with-test-cases.zip' which has the jar
@@ -118,6 +111,15 @@ Here is the short explanations for the packaged found in the source code.
 the fictional reader had made a mistake. The resolving is quite intensive process currently computationally, but not too much, you could improve by just creating cache of these permutations and use set to store them, but it was fancier this way and less typing.
 - There are good number of tests in the program, as I prefer to work TDD. Mostly because that way I can be sure something works as it's designed. Could probably have cut about 25 % of time spent without much of testing.
 
-I'll be happy to answer more quetions relating to the implementation part if there are more.
+
+## Missing features
+
+- There's no UI to speak of and it's usable from command line with 2 arguments
+- There are probably bugs, even though there are test cases for about half the classes
+- It's not very user friendly and lacks much of the feedback or exception handling
+- Testing on different platforms is very lacking, only tested with Windows 10 running Java 8
+
+
+## I'll be happy to answer more quetions relating to the implementation part if there are more.
 
 ## Thanks for reading
