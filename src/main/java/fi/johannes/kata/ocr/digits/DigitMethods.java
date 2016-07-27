@@ -22,7 +22,7 @@
 package fi.johannes.kata.ocr.digits;
 
 import fi.johannes.kata.ocr.cells.Cell;
-import fi.johannes.kata.ocr.core.OcrDigitResolver;
+import fi.johannes.kata.ocr.core.OCRDigitResolver;
 import fi.johannes.kata.ocr.core.data.ApplicationProperties;
 import fi.johannes.kata.ocr.core.data.ApplicationStrings;
 import java.util.List;
@@ -38,16 +38,16 @@ class DigitMethods {
   public static List<Integer> getPossibleNumbers(Cell cell) {
     // First is the original number
     List<Integer> possibleNumbers =
-        OcrDigitResolver.CellNumber.resolveNumberWithPossibilities(cell);
+        OCRDigitResolver.CellNumber.resolveNumberWithPossibilities(cell);
     return possibleNumbers.subList(1, possibleNumbers.size());
   }
 
   public static Integer getNumber(Cell cell) {
-    return OcrDigitResolver.CellNumber.resolveNumber(cell);
+    return OCRDigitResolver.CellNumber.resolveNumber(cell);
   }
 
   public static boolean isValidNumber(Integer numb) {
-    return !OcrDigitResolver.CellNumber.isInvalidNumber(numb);
+    return !OCRDigitResolver.CellNumber.isInvalidNumber(numb);
   }
 
   public static String getInvalidRepresentation() {

@@ -20,9 +20,9 @@
  */
 package fi.johannes.kata.ocr.core;
 
-import fi.johannes.kata.ocr.entry.OCREntry;
 import fi.johannes.kata.ocr.cells.CellRow;
 import fi.johannes.kata.ocr.cells.CellRows;
+import fi.johannes.kata.ocr.entry.OCREntry;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;

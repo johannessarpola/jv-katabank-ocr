@@ -21,11 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package fi.johannes.kata.ocr.core;
+package fi.johannes.kata.ocr.entry;
 
+import fi.johannes.kata.ocr.entry.OCREntry;
 import fi.johannes.kata.ocr.cells.Cell;
 import fi.johannes.kata.ocr.cells.CellRow;
-import fi.johannes.kata.ocr.core.OCREntry.Status;
+import fi.johannes.kata.ocr.entry.OCREntry.Status;
 import fi.johannes.kata.ocr.core.data.ApplicationData;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;

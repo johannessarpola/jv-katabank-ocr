@@ -28,14 +28,16 @@ import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  *
  * @author Johannes Sarpola
  */
-public class ResolversTest {
+public class OCRDigitResolverTest {
 
-    public ResolversTest() {
+    public OCRDigitResolverTest() {
     }
     String zero = " _ " + "| |" + "|_|";
     String one = "   " + "  |" + "  |";
@@ -74,16 +76,16 @@ public class ResolversTest {
         Cell cEight = new Cell(eight);
         Cell cNine = new Cell(nine);
 
-        assertEquals(0, Resolvers.CellNumber.resolveNumber(cZero).intValue());
-        assertEquals(1, Resolvers.CellNumber.resolveNumber(cOne).intValue());
-        assertEquals(2, Resolvers.CellNumber.resolveNumber(cTwo).intValue());
-        assertEquals(3, Resolvers.CellNumber.resolveNumber(cThree).intValue());
-        assertEquals(4, Resolvers.CellNumber.resolveNumber(cFour).intValue());
-        assertEquals(5, Resolvers.CellNumber.resolveNumber(cFive).intValue());
-        assertEquals(6, Resolvers.CellNumber.resolveNumber(cSix).intValue());
-        assertEquals(7, Resolvers.CellNumber.resolveNumber(cSeven).intValue());
-        assertEquals(8, Resolvers.CellNumber.resolveNumber(cEight).intValue());
-        assertEquals(9, Resolvers.CellNumber.resolveNumber(cNine).intValue());
+        assertEquals(0, OCRDigitResolver.CellNumber.resolveNumber(cZero).intValue());
+        assertEquals(1, OCRDigitResolver.CellNumber.resolveNumber(cOne).intValue());
+        assertEquals(2, OCRDigitResolver.CellNumber.resolveNumber(cTwo).intValue());
+        assertEquals(3, OCRDigitResolver.CellNumber.resolveNumber(cThree).intValue());
+        assertEquals(4, OCRDigitResolver.CellNumber.resolveNumber(cFour).intValue());
+        assertEquals(5, OCRDigitResolver.CellNumber.resolveNumber(cFive).intValue());
+        assertEquals(6, OCRDigitResolver.CellNumber.resolveNumber(cSix).intValue());
+        assertEquals(7, OCRDigitResolver.CellNumber.resolveNumber(cSeven).intValue());
+        assertEquals(8, OCRDigitResolver.CellNumber.resolveNumber(cEight).intValue());
+        assertEquals(9, OCRDigitResolver.CellNumber.resolveNumber(cNine).intValue());
     }
 
     @Test
@@ -98,15 +100,15 @@ public class ResolversTest {
 
         Cell nPos = new Cell(noPossibilities);
 
-        List<Integer> pOnes = Resolvers.CellNumber.resolveNumberWithPossibilities(pOne);
-        List<Integer> pOnes2 = Resolvers.CellNumber.resolveNumberWithPossibilities(pOne2);
+        List<Integer> pOnes = OCRDigitResolver.CellNumber.resolveNumberWithPossibilities(pOne);
+        List<Integer> pOnes2 = OCRDigitResolver.CellNumber.resolveNumberWithPossibilities(pOne2);
 
-        List<Integer> pFives = Resolvers.CellNumber.resolveNumberWithPossibilities(pFive);
-        List<Integer> pNines = Resolvers.CellNumber.resolveNumberWithPossibilities(pNine);
-        List<Integer> pNines2 = Resolvers.CellNumber.resolveNumberWithPossibilities(pNine2);
-        List<Integer> pSevens = Resolvers.CellNumber.resolveNumberWithPossibilities(pSeven);
-        List<Integer> pSixes = Resolvers.CellNumber.resolveNumberWithPossibilities(pSix);
-        List<Integer> nPoss = Resolvers.CellNumber.resolveNumberWithPossibilities(nPos);
+        List<Integer> pFives = OCRDigitResolver.CellNumber.resolveNumberWithPossibilities(pFive);
+        List<Integer> pNines = OCRDigitResolver.CellNumber.resolveNumberWithPossibilities(pNine);
+        List<Integer> pNines2 = OCRDigitResolver.CellNumber.resolveNumberWithPossibilities(pNine2);
+        List<Integer> pSevens = OCRDigitResolver.CellNumber.resolveNumberWithPossibilities(pSeven);
+        List<Integer> pSixes = OCRDigitResolver.CellNumber.resolveNumberWithPossibilities(pSix);
+        List<Integer> nPoss = OCRDigitResolver.CellNumber.resolveNumberWithPossibilities(nPos);
 
         // should only have -1 and 1
         assertEquals(2, pOnes.size());
