@@ -72,6 +72,7 @@ Here is the short explanations for the packaged found in the source code.
 - OCRDigitResolver.java is the class used in identifying a string digit and it's alternatives as defined in the task
 
 **fi.johannes.kata.ocr.entry**
+
 - OCREntry.java is the upper plane unit which means a single row of digits from input file e.g. 123415
 - OCREntryMethods.java is the class which has static methods for OCREntry.java, package scoped.
 
