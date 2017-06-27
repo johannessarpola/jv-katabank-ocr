@@ -119,8 +119,3 @@ the fictional reader had made a mistake. The resolving is quite intensive proces
 - There are probably bugs, even though there are test cases for about half the classes
 - It's not very user friendly and lacks much of the feedback or exception handling
 - Testing on different platforms is very lacking, only tested with Windows 10 running Java 8
-
-
-## I'll be happy to answer more quetions relating to the implementation part if there are more.
-
-## Thanks for reading
