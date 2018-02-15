@@ -1,6 +1,6 @@
 # KataBankOCR 
 
->Johannes Sarpola, johannes.sarpola(a)gmail.com
+>Johannes Sarpola
 
 >License: MIT
 
